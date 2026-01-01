@@ -1,0 +1,60 @@
+---
+title: "Getting Started with Next.js 14 and TypeScript"
+date: "2024-01-15"
+excerpt: "Learn how to build modern web applications with Next.js 14 App Router and TypeScript."
+tags: ["Next.js", "TypeScript", "React"]
+---
+
+# Getting Started with Next.js 14
+
+Next.js 14 brings powerful new features to the table, especially with the App Router. Let's explore how you can leverage these capabilities.
+
+## Why Next.js 14?
+
+The latest version includes:
+
+- **Improved Performance**: Faster builds and optimized routing
+- **Server Components**: Better performance by default
+- **Streaming**: Progressive page rendering
+- **Built-in Optimization**: Image, font, and script optimization
+
+## Creating Your First App
+
+```bash
+npx create-next-app@latest my-app --typescript --tailwind --app
+```
+
+This command sets up a new project with:
+- TypeScript for type safety
+- Tailwind CSS for styling
+- App Router for routing
+
+## Server vs Client Components
+
+One of the key concepts in Next.js 14 is the distinction between server and client components.
+
+### Server Components (Default)
+
+```tsx
+export default async function ServerComponent() {
+  const data = await fetch('https://api.example.com/data');
+  return <div>{data.title}</div>;
+}
+```
+
+### Client Components
+
+```tsx
+"use client";
+
+import { useState } from 'react';
+
+export function ClientComponent() {
+  const [count, setCount] = useState(0);
+  return <button onClick={() => setCount(count + 1)}>{count}</button>;
+}
+```
+
+## Conclusion
+
+Next.js 14 provides a powerful foundation for building modern web applications. Start exploring today!
