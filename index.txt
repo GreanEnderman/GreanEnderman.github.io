@@ -1,0 +1,138 @@
+2:I[6712,["972","static/chunks/972-b1faab028f1ef70b.js","11","static/chunks/11-227794eea63ed86e.js","931","static/chunks/app/page-48aeaafeff56303a.js"],"Home"]
+5:I[4491,["185","static/chunks/app/layout-ad11271c5db917fc.js"],"LanguageProvider"]
+6:I[5495,["185","static/chunks/app/layout-ad11271c5db917fc.js"],"ThemeProvider"]
+7:I[4707,[],""]
+8:I[6423,[],""]
+3:T54e,
+# Getting Started with Next.js 14
+
+Next.js 14 brings powerful new features to the table, especially with the App Router. Let's explore how you can leverage these capabilities.
+
+## Why Next.js 14?
+
+The latest version includes:
+
+- **Improved Performance**: Faster builds and optimized routing
+- **Server Components**: Better performance by default
+- **Streaming**: Progressive page rendering
+- **Built-in Optimization**: Image, font, and script optimization
+
+## Creating Your First App
+
+```bash
+npx create-next-app@latest my-app --typescript --tailwind --app
+```
+
+This command sets up a new project with:
+- TypeScript for type safety
+- Tailwind CSS for styling
+- App Router for routing
+
+## Server vs Client Components
+
+One of the key concepts in Next.js 14 is the distinction between server and client components.
+
+### Server Components (Default)
+
+```tsx
+export default async function ServerComponent() {
+  const data = await fetch('https://api.example.com/data');
+  return <div>{data.title}</div>;
+}
+```
+
+### Client Components
+
+```tsx
+"use client";
+
+import { useState } from 'react';
+
+export function ClientComponent() {
+  const [count, setCount] = useState(0);
+  return <button onClick={() => setCount(count + 1)}>{count}</button>;
+}
+```
+
+## Conclusion
+
+Next.js 14 provides a powerful foundation for building modern web applications. Start exploring today!
+4:T623,
+# Understanding TypeScript Generics
+
+Generics are one of TypeScript's most powerful features. They allow you to create reusable components that work with a variety of types while maintaining type safety.
+
+## What are Generics?
+
+Generics allow you to define types that are parameterized. This means you can write code that can work with different types without losing type information.
+
+## Basic Syntax
+
+Here's a simple example:
+
+```typescript
+function identity<T>(arg: T): T {
+  return arg;
+}
+
+const num = identity<number>(42); // Type: number
+const str = identity("hello"); // Type: string (type inference)
+```
+
+## Generic Interfaces
+
+You can also use generics with interfaces:
+
+```typescript
+interface Box<T> {
+  value: T;
+}
+
+const numberBox: Box<number> = { value: 42 };
+const stringBox: Box<string> = { value: "hello" };
+```
+
+## Generic Constraints
+
+Sometimes you want to constrain the generic type:
+
+```typescript
+interface Lengthwise {
+  length: number;
+}
+
+function loggingIdentity<T extends Lengthwise>(arg: T): T {
+  console.log(arg.length);
+  return arg;
+}
+```
+
+## Real-World Example
+
+Here's a practical example with API responses:
+
+```typescript
+interface ApiResponse<T> {
+  data: T;
+  status: number;
+  message: string;
+}
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+async function fetchUser(): Promise<ApiResponse<User>> {
+  const response = await fetch('/api/user');
+  return response.json();
+}
+```
+
+## Conclusion
+
+Generics are essential for writing flexible, reusable TypeScript code. Master them to level up your TypeScript skills!
+0:["NGXG3BJx8V72aS0HvSmaf",[[["",{"children":["__PAGE__",{}]},"$undefined","$undefined",true],["",{"children":["__PAGE__",{},[["$L1",["$","$L2",null,{"latestPosts":[{"slug":"test","title":"MDX 示例","date":"2024-01-15","excerpt":"","tags":[],"content":"\r\n# 欢迎使用 MDX\r\n\r\n## 代码示例\r\n\r\n```javascript\r\nfunction hello() {\r\n  console.log(\"Hello, World!\");\r\n}\r\n```"},{"slug":"getting-started-nextjs","title":"Getting Started with Next.js 14 and TypeScript","date":"2024-01-15","excerpt":"Learn how to build modern web applications with Next.js 14 App Router and TypeScript.","tags":["Next.js","TypeScript","React"],"content":"$3"},{"slug":"typescript-generics","title":"Understanding TypeScript Generics","date":"2024-01-10","excerpt":"A deep dive into TypeScript generics and how to write reusable, type-safe code.","tags":["TypeScript","Programming","Tutorial"],"content":"$4"}]}],null],null],null]},[[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/b882d5a0bbb4e84b.css","precedence":"next","crossOrigin":"$undefined"}]],["$","html",null,{"lang":"zh","suppressHydrationWarning":true,"children":["$","body",null,{"className":"__className_f367f3","children":["$","$L5",null,{"defaultLanguage":"zh","children":["$","$L6",null,{"attribute":"class","defaultTheme":"system","enableSystem":true,"disableTransitionOnChange":true,"children":["$","$L7",null,{"parallelRouterKey":"children","segmentPath":["children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L8",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":"404"}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],"notFoundStyles":[]}]}]}]}]}]],null],null],["$L9",null]]]]
+9:[["$","meta","0",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","1",{"charSet":"utf-8"}],["$","title","2",{"children":"Blog | Modern Personal Blog"}],["$","meta","3",{"name":"description","content":"A modern personal blog with Bento Grid design"}]]
+1:null
