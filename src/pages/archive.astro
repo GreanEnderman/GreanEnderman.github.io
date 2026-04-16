@@ -1,0 +1,137 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getArchiveTimeline, getArchiveStats } from '@lib/archive';
+import { formatDate } from '@lib/posts';
+
+const timeline = await getArchiveTimeline();
+const stats = await getArchiveStats();
+---
+
+<BaseLayout title="归档 | 数字馆长">
+  <main class="pt-32 pb-24 px-6 max-w-7xl mx-auto">
+    <!-- Header -->
+    <header class="mb-16 md:mb-24 border-b border-[var(--outline-variant)] border-opacity-30 pb-12">
+      <div class="max-w-2xl">
+        <h1 class="text-6xl md:text-8xl font-headline font-bold tracking-tighter text-[var(--on-surface)] mb-8">
+          归档
+        </h1>
+        <p class="text-lg text-on-surface-variant font-body leading-relaxed">
+          从 {stats.oldestYear} 年至今，共 <span class="font-bold text-primary">{stats.totalPosts}</span> 篇文章，
+          跨越 <span class="font-bold text-primary">{stats.yearCount}</span> 个年份的思考与记录。
+        </p>
+      </div>
+    </header>
+
+    <!-- Archive Timeline -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <!-- Year Navigation (Sidebar) -->
+      <aside class="lg:col-span-3">
+        <div class="lg:sticky lg:top-32">
+          <h2 class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant mb-6">
+            年份导航
+          </h2>
+          <nav class="space-y-2">
+            {timeline.map(({ year, totalPosts }) => (
+              <a
+                href={`#year-${year}`}
+                class="block font-body text-sm text-on-surface-variant hover:text-primary transition-colors py-2 border-l-2 border-transparent hover:border-primary pl-4"
+              >
+                {year} 年 <span class="text-xs">({totalPosts})</span>
+              </a>
+            ))}
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Timeline Content -->
+      <div class="lg:col-span-9">
+        {timeline.map(({ year, months, totalPosts }) => (
+          <section id={`year-${year}`} class="mb-20 scroll-mt-32">
+            <!-- Year Header -->
+            <div class="mb-12 pb-6 border-b border-[var(--outline-variant)] border-opacity-30">
+              <h2 class="text-5xl font-headline font-bold text-[var(--on-surface)] mb-2">
+                {year}
+              </h2>
+              <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">
+                {totalPosts} 篇文章
+              </p>
+            </div>
+
+            <!-- Months -->
+            <div class="space-y-12">
+              {months.map(({ monthName, posts }) => (
+                <div class="relative">
+                  <!-- Month Header -->
+                  <div class="flex items-center gap-4 mb-6">
+                    <h3 class="font-body text-lg font-semibold text-[var(--on-surface)]">
+                      {monthName}
+                    </h3>
+                    <span class="flex-1 h-px bg-outline-variant/30"></span>
+                    <span class="font-label text-xs text-on-surface-variant">
+                      {posts.length} 篇
+                    </span>
+                  </div>
+
+                  <!-- Posts List -->
+                  <div class="space-y-6 relative">
+                    <!-- Timeline Line -->
+                    <div class="absolute left-0 top-0 bottom-0 w-[1px] bg-outline-variant opacity-20 ml-2"></div>
+
+                    {posts.map((post) => (
+                      <article class="relative pl-8 group">
+                        <!-- Timeline Dot -->
+                        <div class={`absolute left-[-2px] top-2 w-1.5 h-1.5 rounded-full ring-4 ring-background ${
+                          post.data.category === 'tech' ? 'bg-primary' : 'bg-secondary'
+                        }`}></div>
+
+                        <a href={`/posts/${post.slug}/`} class="block">
+                          <div class="flex items-start justify-between gap-4 mb-2">
+                            <h4 class="font-headline text-xl text-[var(--on-surface)] group-hover:text-primary transition-colors leading-snug">
+                              {post.data.title}
+                            </h4>
+                            <time class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant whitespace-nowrap mt-1">
+                              {formatDate(post.data.date, 'zh-CN').split('年')[1]}
+                            </time>
+                          </div>
+
+                          {post.data.description && (
+                            <p class="font-body text-sm text-on-surface-variant leading-relaxed mb-3">
+                              {post.data.description}
+                            </p>
+                          )}
+
+                          <div class="flex items-center gap-3">
+                            <span class={`font-label text-[10px] px-2 py-1 rounded-sm uppercase tracking-tighter ${
+                              post.data.category === 'tech'
+                                ? 'bg-primary-container text-on-primary-container'
+                                : 'bg-secondary-container text-on-secondary-container'
+                            }`}>
+                              {post.data.category === 'tech' ? '技术' : '随笔'}
+                            </span>
+
+                            {post.data.tags.slice(0, 3).map((tag) => (
+                              <span class="font-label text-[10px] text-on-surface-variant">
+                                #{tag}
+                              </span>
+                            ))}
+                          </div>
+                        </a>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  /* Smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

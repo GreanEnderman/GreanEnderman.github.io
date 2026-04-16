@@ -1,0 +1,175 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PostCard from '@components/post/PostCard.astro';
+import { getAllPosts, getPostsByCategory } from '@lib/posts';
+
+export async function getStaticPaths() {
+  const allPosts = await getAllPosts();
+  const perPage = 12;
+  const categories = ['all', 'tech', 'essay'];
+
+  const paths = [];
+
+  for (const category of categories) {
+    const posts = category === 'all'
+      ? allPosts
+      : await getPostsByCategory(category as 'tech' | 'essay');
+
+    const totalPages = Math.ceil(posts.length / perPage);
+
+    // 生成每个分类的每一页
+    for (let page = 1; page <= totalPages; page++) {
+      paths.push({
+        params: {
+          category,
+        },
+        props: {
+          posts: posts.slice((page - 1) * perPage, page * perPage),
+          currentPage: page,
+          totalPages,
+          category
+        }
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { posts, currentPage, totalPages, category } = Astro.props;
+
+// 分页辅助函数
+const getPageUrl = (pageNum: number) => {
+  if (pageNum === 1) {
+    return `/posts/category/${category}/`;
+  }
+  return `/posts/category/${category}/${pageNum}/`;
+};
+
+const getCategoryUrl = (cat: string) => {
+  return `/posts/category/${cat}/`;
+};
+
+// 分类标题映射
+const categoryTitles = {
+  all: '全部文章',
+  tech: '技术文章',
+  essay: '随笔'
+};
+---
+
+<BaseLayout title={`${categoryTitles[category as keyof typeof categoryTitles]} | 数字馆长`}>
+  <main class="pt-32 pb-24 px-6 max-w-7xl mx-auto">
+    <!-- Header Area -->
+    <header class="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-[var(--outline-variant)] border-opacity-30 pb-12">
+      <div class="max-w-2xl">
+        <h1 class="text-6xl md:text-8xl font-headline font-bold tracking-tighter text-[var(--on-surface)] mb-8">
+          {categoryTitles[category as keyof typeof categoryTitles]}
+        </h1>
+        <p class="text-lg text-on-surface-variant font-body leading-relaxed">
+          技术探索与文学观察的编年记录。为好奇心精心策划。
+        </p>
+      </div>
+      <!-- Navigation Toggle/Filter -->
+      <div class="inline-flex p-1 bg-[var(--surface-container-low)] rounded-lg">
+        <a
+          href={getCategoryUrl('all')}
+          class={`px-6 py-2 text-xs font-label uppercase tracking-[0.2em] transition-all duration-200 rounded-lg ${
+            category === 'all'
+              ? 'bg-[var(--surface-container-lowest)] text-[var(--on-surface)] shadow-sm'
+              : 'text-on-surface-variant hover:text-on-surface'
+          }`}
+        >
+          全部
+        </a>
+        <a
+          href={getCategoryUrl('tech')}
+          class={`px-6 py-2 text-xs font-label uppercase tracking-[0.2em] transition-all duration-200 rounded-lg ${
+            category === 'tech'
+              ? 'bg-[var(--surface-container-lowest)] text-[var(--on-surface)] shadow-sm'
+              : 'text-on-surface-variant hover:text-on-surface'
+          }`}
+        >
+          技术
+        </a>
+        <a
+          href={getCategoryUrl('essay')}
+          class={`px-6 py-2 text-xs font-label uppercase tracking-[0.2em] transition-all duration-200 rounded-lg ${
+            category === 'essay'
+              ? 'bg-[var(--surface-container-lowest)] text-[var(--on-surface)] shadow-sm'
+              : 'text-on-surface-variant hover:text-on-surface'
+          }`}
+        >
+          随笔
+        </a>
+      </div>
+    </header>
+
+    <!-- Articles Bento/Asymmetric Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-y-16 md:gap-x-12">
+      {posts.map((post, index) => {
+        // 第一篇文章占 8 列（featured），其他占 4 列
+        const isFeatured = index === 0;
+        const colSpan = isFeatured ? 'md:col-span-8' : 'md:col-span-4';
+
+        return (
+          <article class={`${colSpan} editorial-index-item`}>
+            <PostCard post={post} featured={isFeatured} />
+          </article>
+        );
+      })}
+    </div>
+
+    <!-- Pagination -->
+    {totalPages > 1 && (
+      <div class="mt-32 flex justify-center items-center gap-8 border-t border-[var(--outline-variant)] border-opacity-30 pt-12">
+        {currentPage > 1 && (
+          <a
+            href={getPageUrl(currentPage - 1)}
+            class="group flex items-center gap-2 text-[var(--on-surface-variant)] hover:text-[var(--on-surface)] transition-colors"
+          >
+            <span class="material-symbols-outlined text-sm">west</span>
+            <span class="font-label text-xs uppercase tracking-widest">上一页</span>
+          </a>
+        )}
+
+        <div class="flex gap-6 font-label text-xs">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+            <a
+              href={getPageUrl(pageNum)}
+              class={`transition-colors ${
+                pageNum === currentPage
+                  ? 'text-[var(--on-surface)] font-bold border-b-2 border-[var(--on-surface)] pb-1'
+                  : 'text-[var(--on-surface-variant)] hover:text-[var(--on-surface)]'
+              }`}
+            >
+              {pageNum.toString().padStart(2, '0')}
+            </a>
+          ))}
+        </div>
+
+        {currentPage < totalPages && (
+          <a
+            href={getPageUrl(currentPage + 1)}
+            class="group flex items-center gap-2 text-[var(--on-surface-variant)] hover:text-[var(--on-surface)] transition-colors"
+          >
+            <span class="font-label text-xs uppercase tracking-widest">下一页</span>
+            <span class="material-symbols-outlined text-sm">east</span>
+          </a>
+        )}
+      </div>
+    )}
+  </main>
+</BaseLayout>
+
+<style>
+  .editorial-index-item {
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding-bottom: 3rem;
+  }
+  @media (min-width: 768px) {
+    .editorial-index-item:last-child {
+      border-bottom: none;
+    }
+  }
+</style>

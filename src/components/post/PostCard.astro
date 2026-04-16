@@ -1,0 +1,185 @@
+---
+import PostMeta from './PostMeta.astro';
+import TagList from './TagList.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  featured?: boolean;
+}
+
+const { post, featured = false } = Astro.props;
+---
+
+<article class={`post-card ${featured ? 'post-card-featured' : ''}`}>
+  <a href={`/posts/${post.slug}`} class="post-card-link">
+    {post.data.cover && (
+      <div class="post-card-cover">
+        <img src={post.data.cover} alt={post.data.title} />
+      </div>
+    )}
+
+    <div class="post-card-content">
+      <div class="post-card-header">
+        <span class={`post-card-category category-${post.data.category}`}>
+          {post.data.category === 'tech' ? '技术' : '随笔'}
+        </span>
+        <PostMeta post={post} />
+      </div>
+
+      <h3 class="post-card-title">{post.data.title}</h3>
+
+      {post.data.description && (
+        <p class="post-card-description">{post.data.description}</p>
+      )}
+
+      {post.data.tags.length > 0 && (
+        <div class="post-card-tags">
+          <TagList tags={post.data.tags} />
+        </div>
+      )}
+    </div>
+  </a>
+</article>
+
+<style>
+  .post-card {
+    background-color: var(--surface-container-low);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+
+  .post-card:hover {
+    background-color: var(--surface-container-high);
+    transform: translateY(-2px);
+  }
+
+  .post-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .post-card-cover {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  .post-card-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+
+  .post-card:hover .post-card-cover img {
+    transform: scale(1.05);
+  }
+
+  .post-card-content {
+    padding: 1.5rem;
+  }
+
+  .post-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .post-card-category {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+  }
+
+  .category-tech {
+    background-color: var(--primary-container);
+    color: var(--on-primary-container);
+  }
+
+  .category-essay {
+    background-color: var(--secondary-container);
+    color: var(--on-secondary-container);
+  }
+
+  .post-card-title {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--on-surface);
+    margin-bottom: 0.75rem;
+    transition: color 0.2s;
+  }
+
+  .post-card:hover .post-card-title {
+    color: var(--primary);
+  }
+
+  .post-card-description {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--on-surface-variant);
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .post-card-tags {
+    margin-top: 1rem;
+  }
+
+  /* Featured 样式 */
+  .post-card-featured {
+    grid-column: span 2;
+  }
+
+  .post-card-featured .post-card-content {
+    padding: 2rem;
+  }
+
+  .post-card-featured .post-card-title {
+    font-size: 2rem;
+  }
+
+  .post-card-featured .post-card-description {
+    font-size: 1.0625rem;
+    -webkit-line-clamp: 3;
+  }
+
+  /* 响应式 */
+  @media (max-width: 768px) {
+    .post-card-featured {
+      grid-column: span 1;
+    }
+
+    .post-card-content {
+      padding: 1.25rem;
+    }
+
+    .post-card-featured .post-card-content {
+      padding: 1.5rem;
+    }
+
+    .post-card-title {
+      font-size: 1.25rem;
+    }
+
+    .post-card-featured .post-card-title {
+      font-size: 1.5rem;
+    }
+
+    .post-card-description {
+      font-size: 0.875rem;
+    }
+  }
+</style>

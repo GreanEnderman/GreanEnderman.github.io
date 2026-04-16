@@ -1,0 +1,24 @@
+{
+  "name": "myblog",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "deploy": "npm run build && git add . && git commit -m \"更新内容\" && git push origin main",
+    "new:tech": "node scripts/new.js tech",
+    "new:essay": "node scripts/new.js essay",
+    "new:project": "node scripts/new.js project",
+    "new": "node scripts/new.js"
+  },
+  "dependencies": {
+    "astro": "^5.1.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.7.2"
+  }
+}

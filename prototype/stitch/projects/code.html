@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed-dim": "#94f0df",
+                    "surface-variant": "#dde4e5",
+                    "on-primary-fixed": "#2c358e",
+                    "on-secondary": "#f2faff",
+                    "primary-fixed-dim": "#ced1ff",
+                    "inverse-surface": "#0c0f0f",
+                    "on-tertiary-fixed": "#005046",
+                    "on-surface": "#2d3435",
+                    "background": "#f9f9f9",
+                    "outline-variant": "#adb3b4",
+                    "on-primary-fixed-variant": "#4953ac",
+                    "surface-container": "#ebeeef",
+                    "on-secondary-fixed-variant": "#495f69",
+                    "surface-bright": "#f9f9f9",
+                    "tertiary-container": "#a2ffed",
+                    "on-error-container": "#752121",
+                    "surface": "#f9f9f9",
+                    "error": "#9f403d",
+                    "secondary-fixed": "#cfe6f2",
+                    "error-dim": "#4e0309",
+                    "primary-fixed": "#e0e0ff",
+                    "surface-container-low": "#f2f4f4",
+                    "tertiary": "#006b5f",
+                    "surface-dim": "#d4dbdd",
+                    "secondary-fixed-dim": "#c1d8e4",
+                    "on-surface-variant": "#5a6061",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#fff7f6",
+                    "on-secondary-container": "#40555f",
+                    "primary-container": "#e0e0ff",
+                    "on-tertiary-fixed-variant": "#006f62",
+                    "secondary-container": "#cfe6f2",
+                    "on-tertiary-container": "#006458",
+                    "tertiary-fixed": "#a2ffed",
+                    "secondary-dim": "#415660",
+                    "on-primary-container": "#3f48a1",
+                    "on-tertiary": "#e3fff7",
+                    "primary-dim": "#4049a2",
+                    "on-background": "#2d3435",
+                    "primary": "#4c56af",
+                    "inverse-on-surface": "#9c9d9d",
+                    "tertiary-dim": "#005e53",
+                    "surface-container-high": "#e4e9ea",
+                    "error-container": "#fe8983",
+                    "surface-container-highest": "#dde4e5",
+                    "inverse-primary": "#929bfa",
+                    "outline": "#757c7d",
+                    "on-secondary-fixed": "#2d424c",
+                    "on-primary": "#f9f6ff",
+                    "secondary": "#4d626c",
+                    "surface-tint": "#4c56af"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Newsreader", "serif"],
+                    "body": ["Manrope", "sans-serif"],
+                    "label": ["Space Grotesk", "sans-serif"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Manrope', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: #f9f9f9;
+            color: #2d3435;
+        }
+        .serif-italic { font-family: 'Newsreader', serif; font-style: italic; }
+        .tech-label { font-family: 'Space Grotesk', monospace; }
+        .project-row:hover { background-color: #ebeeef; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl bg-gradient-to-b from-slate-100/5 to-transparent">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+<div class="text-2xl font-serif italic text-slate-950 dark:text-white font-['Newsreader'] italic tracking-tight">
+            The Digital Curator
+        </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors font-['Newsreader'] italic tracking-tight" href="#">首页</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors font-['Newsreader'] italic tracking-tight" href="#">随笔</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors font-['Newsreader'] italic tracking-tight" href="#">技术</a>
+<a class="text-slate-950 dark:text-white border-b-2 border-slate-900 dark:border-slate-100 pb-1 font-['Newsreader'] italic tracking-tight" href="#">项目</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors font-['Newsreader'] italic tracking-tight" href="#">归档</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:opacity-80 transition-opacity duration-300 text-slate-900 dark:text-slate-50">
+<span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Canvas -->
+<main class="pt-32 pb-24 px-6 max-w-7xl mx-auto min-h-screen">
+<!-- Header Section (Asymmetric Editorial Style) -->
+<header class="mb-20 flex flex-col md:flex-row md:items-end gap-8">
+<div class="max-w-2xl">
+<p class="font-label uppercase tracking-widest text-xs text-primary mb-4">Chronicle of Works</p>
+<h1 class="text-6xl md:text-8xl font-headline italic tracking-tighter leading-none text-on-surface">精选项目</h1>
+</div>
+<div class="md:pb-2 max-w-sm">
+<p class="text-on-surface-variant font-body leading-relaxed">
+                一个精心策划的技术实验、开源贡献和工业级数字架构档案。
+            </p>
+</div>
+</header>
+<!-- Project Archive List (Editorial "No-Line" Layout) -->
+<section class="space-y-0">
+<!-- Project Item 01 -->
+<article class="project-row group grid grid-cols-1 md:grid-cols-12 items-start py-12 px-4 transition-all duration-300 rounded-lg">
+<div class="md:col-span-1 hidden md:block">
+<span class="font-label text-outline-variant text-sm">01</span>
+</div>
+<div class="md:col-span-4 flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">已完成</span>
+</div>
+<h3 class="text-3xl font-headline italic text-on-surface group-hover:text-primary transition-colors">神经画布 / Neural Canvas</h3>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="font-label text-[10px] px-2 py-0.5 bg-secondary-container text-on-secondary-container rounded-sm uppercase">Python</span>
+<span class="font-label text-[10px] px-2 py-0.5 bg-secondary-container text-on-secondary-container rounded-sm uppercase">PyTorch</span>
+<span class="font-label text-[10px] px-2 py-0.5 bg-secondary-container text-on-secondary-container rounded-sm uppercase">React</span>
+</div>
+</div>
+<div class="md:col-span-4 mt-4 md:mt-0">
+<p class="text-on-surface-variant font-body leading-relaxed pr-8">
+                    一个实验性的生成艺术引擎，利用生成对抗网络（GANs）将经典文学文本解读为抽象视觉模式。
+                </p>
+</div>
+<div class="md:col-span-2 mt-6 md:mt-0 flex gap-6 md:justify-end">
+<a class="flex items-center gap-2 font-label text-xs uppercase tracking-widest hover:text-primary transition-colors" href="#">
+                    代码仓库 <span class="material-symbols-outlined text-sm">arrow_outward</span>
+</a>
+<a class="flex items-center gap-2 font-label text-xs uppercase tracking-widest hover:text-primary transition-colors" href="#">
+                    演示 <span class="material-symbols-outlined text-sm">visibility</span>
+</a>
+</div>
+<div class="md:col-span-1 hidden md:flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+<div class="w-16 h-16 bg-surface-container-highest rounded overflow-hidden">
+<img alt="abstract art" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5nKigSnqxks63gzrDqeeckJT_wtJlOTW_TMUXayGcZHGfs5d03KjpPjPfCF8JxBHVl6cmf6SOCo6aFjWWxnwvRKkoTzWW9-XZtNh-z5RHpzSEG1BfAfokQO99iZJG2u91YwVHoTHL3uatICWZkvofyugyGftOAWtH7sT8sxtm7bh-ckLSRkvUqfE4BCWp5FuYO6uab1pErpRZIg5-giBWQ1s7UU7W-MuVALDk5SrmXmO3Yaokom3srX_rYgd9JOcrM03hV_YFLdY"/>
+</div>
+</div>
+</article>
+<!-- Project Item 02 -->
+<article class="project-row group grid grid-cols-1 md:grid-cols-12 items-start py-12 px-4 transition-all duration-300 rounded-lg bg-surface-container-low/40">
+<div class="md:col-span-1 hidden md:block">
+<span class="font-label text-outline-variant text-sm">02</span>
+</div>
+<div class="md:col-span-4 flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">开发中</span>
+</div>
+<h3 class="text-3xl font-headline italic text-on-surface group-hover:text-primary transition-colors">光辉图式 / Lumina Schema</h3>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="font-label text-[10px] px-2 py-0.5 bg-secondary-container text-on-secondary-container rounded-sm uppercase">Rust</span>
+<span class="font-label text-[10px] px-2 py-0.5 bg-secondary-container text-on-secondary-container rounded-sm uppercase">Wasm</span>
+</div>
+</div>
+<div class="md:col-span-4 mt-4 md:mt-0">
+<p class="text-on-surface-variant font-body leading-relaxed pr-8">
+                    针对分布式知识图谱设计的高度优化内存架构，具有实时向量同步功能。
+                </p>
+</div>
+<div class="md:col-span-2 mt-6 md:mt-0 flex gap-6 md:justify-end">
+<a class="flex items-center gap-2 font-label text-xs uppercase tracking-widest hover:text-primary transition-colors" href="#">
+                    代码仓库 <span class="material-symbols-outlined text-sm">arrow_outward</span>
+</a>
+</div>
+<div class="md:col-span-1 hidden md:flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+<div class="w-16 h-16 bg-surface-container-highest rounded overflow-hidden">
+<img alt="technical visualization" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuTsnd4FCfCIe7T_qwXuZGMxE2T7shFgPixufsC2BEBiYMwaKqzyUnFQ28m9Ip0e-HOWbjDTR8OIkOn7l_BQagpPS2MRF_4epJcmCaDBkWCklsi_sSCuenYYn74BfTNBbwpIALynC9Jv6P4wUKWqvOPJ2INAKg9lSxj-76aCyWuzg9E_jCFy5qRSbUTVuD5sGeXnY_3o1BPdcPhjIZiHr-SUA6gsN-TEmQrMwUR3l7f7uPMhCk6nVXI3CO1uj0StVk8Cso1XCGUw8"/>
+</div>
+</div>
+</article>
+<!-- Project Item 03 -->
+<article class="project-row group grid grid-cols-1 md:grid-cols-12 items-start py-12 px-4 transition-all duration-300 rounded-lg">
+<div class="md:col-span-1 hidden md:block">
+<span class="font-label text-outline-variant text-sm">03</span>
+</div>
+<div class="md:col-span-4 flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">已完成</span>
+</div>
+<h3 class="text-3xl font-headline italic text-on-surface group-hover:text-primary transition-colors">档案协议 / Archive Protocol</h3>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="font-label text-[10px] px-2 py-0.5 bg-secondary-container text-on-secondary-container rounded-sm uppercase">Go</span>
+<span class="font-label text-[10px] px-2 py-0.5 bg-secondary-container text-on-secondary-container rounded-sm uppercase">IPFS</span>
+<span class="font-label text-[10px] px-2 py-0.5 bg-secondary-container text-on-secondary-container rounded-sm uppercase">Svelte</span>
+</div>
+</div>
+<div class="md:col-span-4 mt-4 md:mt-0">
+<p class="text-on-surface-variant font-body leading-relaxed pr-8">
+                    一种用于数字图书馆的去中心化托管方案，优先考虑抗审查性和数据的永久性。
+                </p>
+</div>
+<div class="md:col-span-2 mt-6 md:mt-0 flex gap-6 md:justify-end">
+<a class="flex items-center gap-2 font-label text-xs uppercase tracking-widest hover:text-primary transition-colors" href="#">
+                    代码仓库 <span class="material-symbols-outlined text-sm">arrow_outward</span>
+</a>
+<a class="flex items-center gap-2 font-label text-xs uppercase tracking-widest hover:text-primary transition-colors" href="#">
+                    演示 <span class="material-symbols-outlined text-sm">visibility</span>
+</a>
+</div>
+<div class="md:col-span-1 hidden md:flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+<div class="w-16 h-16 bg-surface-container-highest rounded overflow-hidden">
+<img alt="library archive" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFSQn0S1sjKp-Zz_57jcJa0PRqXTjPJfMiapLaagEXREZ04ig-xyuD41OneplFXR_a_90YUTucEyCTTzav0G_1jOABCWLA5N__LgRgfqWJgCKEm7RWr4YGozVxP6wd_mpYlFIARFI1GlJFiPcV5WBj-vCkxVLwjIYv3_835XBAK2QuqBX0UIJ75sg-1oJDi5dD5FPVFspI2bmqMMsz_rfM0kc-fvQeaUDz2YXOxBbtTkVkO9WetME09FyzhcOvJ3DyAhgzzY2b-W4"/>
+</div>
+</div>
+</article>
+<!-- Project Item 04 -->
+<article class="project-row group grid grid-cols-1 md:grid-cols-12 items-start py-12 px-4 transition-all duration-300 rounded-lg bg-surface-container-low/40">
+<div class="md:col-span-1 hidden md:block">
+<span class="font-label text-outline-variant text-sm">04</span>
+</div>
+<div class="md:col-span-4 flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">已归档</span>
+</div>
+<h3 class="text-3xl font-headline italic text-on-surface group-hover:text-primary transition-colors">虚空系统 / Void OS</h3>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="font-label text-[10px] px-2 py-0.5 bg-secondary-container text-on-secondary-container rounded-sm uppercase">C++</span>
+<span class="font-label text-[10px] px-2 py-0.5 bg-secondary-container text-on-secondary-container rounded-sm uppercase">Assembly</span>
+</div>
+</div>
+<div class="md:col-span-4 mt-4 md:mt-0">
+<p class="text-on-surface-variant font-body leading-relaxed pr-8">
+                    针对高安全性嵌入式环境的极简内核设计研究。已放弃，转而开发 Lumina。
+                </p>
+</div>
+<div class="md:col-span-2 mt-6 md:mt-0 flex gap-6 md:justify-end">
+<a class="flex items-center gap-2 font-label text-xs uppercase tracking-widest hover:text-primary transition-colors" href="#">
+                    代码仓库 <span class="material-symbols-outlined text-sm">arrow_outward</span>
+</a>
+</div>
+<div class="md:col-span-1 hidden md:flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+<div class="w-16 h-16 bg-surface-container-highest rounded overflow-hidden">
+<img alt="circuit board layout" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjdTQDE8buMzPYxRcxiwPmi7R9z85egJHYsJuBm4DnCNvErfRZJunYGIMxdGLdgSl5uSmcwZudCnwlZV0loBbyCHxTQhrVarddYT63MI1pMyOoJXR1lbhH8S2RnE3dJyq0m4ZX5NjX-fYV4FrcDjsIuuAnwmc9-U0jKBEeGvc_2o0w1G62k-xWHMbvgvP1hyTUBjWNORGjMM_dO487cQkvfddOpbejd0lnwOnpZMyuZl5gkzB-DzNi6WxCYGkJF5dvygoEgpClhdc"/>
+</div>
+</div>
+</article>
+</section>
+<!-- CTA Section -->
+<section class="mt-32 p-12 bg-surface-container-low rounded-lg text-center">
+<h2 class="text-4xl font-headline italic mb-4">有项目想合作吗？</h2>
+<p class="max-w-md mx-auto text-on-surface-variant mb-8 font-body">我目前可接受精选的架构咨询和数字艺术合作计划。</p>
+<button class="bg-primary text-on-primary px-8 py-3 rounded-sm font-label uppercase tracking-widest text-sm hover:opacity-90 transition-opacity">
+            发起咨询
+        </button>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-slate-200/15 dark:border-slate-800/15 bg-slate-50 dark:bg-slate-950">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-8 py-12 max-w-7xl mx-auto gap-6">
+<div class="text-slate-600 dark:text-slate-400 font-['Space_Grotesk'] uppercase tracking-widest text-xs">
+            © 2024 The Digital Curator. 以技术精度与文学优雅构建。
+        </div>
+<div class="flex gap-8">
+<a class="text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 underline underline-offset-4 font-['Space_Grotesk'] uppercase tracking-widest text-xs" href="#">RSS 订阅</a>
+<a class="text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 underline underline-offset-4 font-['Space_Grotesk'] uppercase tracking-widest text-xs" href="#">Twitter</a>
+<a class="text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 underline underline-offset-4 font-['Space_Grotesk'] uppercase tracking-widest text-xs" href="#">GitHub</a>
+<a class="text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 underline underline-offset-4 font-['Space_Grotesk'] uppercase tracking-widest text-xs" href="#">源代码</a>
+</div>
+</div>
+</footer>
+</body></html>

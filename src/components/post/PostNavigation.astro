@@ -1,0 +1,68 @@
+---
+import type { Post } from '@lib/posts';
+
+interface Props {
+  prev: Post | null;
+  next: Post | null;
+}
+
+const { prev, next } = Astro.props;
+---
+
+{(prev || next) && (
+  <nav class="post-navigation mt-24 pt-12 border-t border-[var(--outline-variant)] border-opacity-30">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {prev && (
+        <a href={`/posts/${prev.slug}/`} class="post-nav-link group">
+          <div class="flex items-center gap-2 text-[var(--on-surface-variant)] text-xs font-label uppercase tracking-widest mb-3">
+            <span class="material-symbols-outlined text-sm">west</span>
+            <span>上一篇</span>
+          </div>
+          <h3 class="text-xl font-headline font-bold text-[var(--on-surface)] group-hover:text-[var(--primary)] transition-colors">
+            {prev.data.title}
+          </h3>
+          <p class="text-sm text-[var(--on-surface-variant)] mt-2 line-clamp-2">
+            {prev.data.description}
+          </p>
+        </a>
+      )}
+
+      {next && (
+        <a href={`/posts/${next.slug}/`} class="post-nav-link group md:text-right">
+          <div class="flex items-center gap-2 text-[var(--on-surface-variant)] text-xs font-label uppercase tracking-widest mb-3 md:justify-end">
+            <span>下一篇</span>
+            <span class="material-symbols-outlined text-sm">east</span>
+          </div>
+          <h3 class="text-xl font-headline font-bold text-[var(--on-surface)] group-hover:text-[var(--primary)] transition-colors">
+            {next.data.title}
+          </h3>
+          <p class="text-sm text-[var(--on-surface-variant)] mt-2 line-clamp-2">
+            {next.data.description}
+          </p>
+        </a>
+      )}
+    </div>
+  </nav>
+)}
+
+<style>
+  .post-nav-link {
+    display: block;
+    padding: 1.5rem;
+    background: var(--surface-container-low);
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+  }
+
+  .post-nav-link:hover {
+    background: var(--surface-container-high);
+    transform: translateY(-2px);
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

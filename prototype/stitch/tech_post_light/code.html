@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>构建低延迟的 WebAssembly 与 Rust 流处理架构 - The Digital Curator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;family=Space+Grotesk:wght@300..700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#2c358e",
+                        "surface": "#f9f9f9",
+                        "primary": "#4c56af",
+                        "on-primary": "#f9f6ff",
+                        "on-surface-variant": "#5a6061",
+                        "on-background": "#2d3435",
+                        "tertiary-container": "#a2ffed",
+                        "on-tertiary-container": "#006458",
+                        "primary-dim": "#4049a2",
+                        "primary-container": "#e0e0ff",
+                        "surface-container-highest": "#dde4e5",
+                        "on-error-container": "#752121",
+                        "secondary-dim": "#415660",
+                        "on-surface": "#2d3435",
+                        "surface-container-lowest": "#ffffff",
+                        "error-dim": "#4e0309",
+                        "error": "#9f403d",
+                        "inverse-on-surface": "#9c9d9d",
+                        "tertiary": "#006b5f",
+                        "on-tertiary-fixed-variant": "#006f62",
+                        "surface-tint": "#4c56af",
+                        "surface-variant": "#dde4e5",
+                        "surface-container-high": "#e4e9ea",
+                        "on-tertiary": "#e3fff7",
+                        "on-secondary": "#f2faff",
+                        "surface-bright": "#f9f9f9",
+                        "surface-dim": "#d4dbdd",
+                        "surface-container-low": "#f2f4f4",
+                        "surface-container": "#ebeeef",
+                        "tertiary-dim": "#005e53",
+                        "secondary": "#4d626c",
+                        "on-primary-container": "#3f48a1",
+                        "on-secondary-fixed": "#2d424c",
+                        "inverse-primary": "#929bfa",
+                        "on-secondary-container": "#40555f",
+                        "on-primary-fixed-variant": "#4953ac",
+                        "tertiary-fixed-dim": "#94f0df",
+                        "secondary-fixed-dim": "#c1d8e4",
+                        "on-error": "#fff7f6",
+                        "primary-fixed": "#e0e0ff",
+                        "outline-variant": "#adb3b4",
+                        "inverse-surface": "#0c0f0f",
+                        "secondary-container": "#cfe6f2",
+                        "background": "#f9f9f9",
+                        "primary-fixed-dim": "#ced1ff",
+                        "tertiary-fixed": "#a2ffed",
+                        "on-tertiary-fixed": "#005046",
+                        "outline": "#757c7d",
+                        "error-container": "#fe8983",
+                        "secondary-fixed": "#cfe6f2",
+                        "on-secondary-fixed-variant": "#495f69"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Newsreader"],
+                        "body": ["Manrope"],
+                        "label": ["Space Grotesk"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Manrope', sans-serif; }
+        .serif { font-family: 'Newsreader', serif; }
+        .mono { font-family: 'Space Grotesk', monospace; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #dde4e5; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-surface text-on-background selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl bg-gradient-to-b from-slate-100/5 to-transparent">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+<div class="text-2xl font-serif italic text-slate-950 font-['Newsreader'] tracking-tight">The Digital Curator</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-slate-500 hover:text-slate-800 transition-colors font-body" href="#">Essays</a>
+<a class="text-slate-950 border-b-2 border-slate-900 pb-1 font-body" href="#">Tech</a>
+<a class="text-slate-500 hover:text-slate-800 transition-colors font-body" href="#">Projects</a>
+<a class="text-slate-500 hover:text-slate-800 transition-colors font-body" href="#">Archive</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:opacity-80 transition-opacity duration-300">
+<span class="material-symbols-outlined text-slate-900" data-icon="dark_mode">dark_mode</span>
+</button>
+<button class="md:hidden p-2">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-6 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Sidebar: ToC -->
+<aside class="hidden lg:block lg:col-span-3">
+<div class="sticky top-32 space-y-8">
+<div>
+<h3 class="font-label uppercase tracking-widest text-xs text-outline mb-6">目录 / Contents</h3>
+<nav class="space-y-4">
+<a class="block text-sm text-primary font-medium border-l-2 border-primary pl-4 py-1" href="#intro">核心设计理念</a>
+<a class="block text-sm text-on-surface-variant hover:text-primary transition-colors pl-4 py-1" href="#wasm-rust">Wasm 与 Rust 的契合</a>
+<a class="block text-sm text-on-surface-variant hover:text-primary transition-colors pl-4 py-1" href="#architecture">流处理架构解析</a>
+<a class="block text-sm text-on-surface-variant hover:text-primary transition-colors pl-4 py-1" href="#performance">性能基准测试</a>
+<a class="block text-sm text-on-surface-variant hover:text-primary transition-colors pl-4 py-1" href="#implementation">工程实践与代码</a>
+</nav>
+</div>
+<div class="p-6 bg-surface-container-low rounded-lg">
+<span class="font-label text-[10px] text-primary uppercase tracking-tighter">Technical Stack</span>
+<div class="mt-4 flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-secondary-container text-on-secondary-container text-[10px] font-label">RUST</span>
+<span class="px-2 py-1 bg-secondary-container text-on-secondary-container text-[10px] font-label">WASM</span>
+<span class="px-2 py-1 bg-secondary-container text-on-secondary-container text-[10px] font-label">LATENCY</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content: Essay -->
+<article class="lg:col-span-9 max-w-[800px]">
+<!-- Header -->
+<header class="mb-16">
+<div class="flex items-center gap-3 mb-6">
+<span class="font-label text-xs uppercase tracking-widest text-primary">Technical Paper #042</span>
+<span class="text-outline-variant">•</span>
+<span class="font-label text-xs text-on-surface-variant uppercase tracking-widest">2024年10月24日</span>
+</div>
+<h1 class="serif text-5xl md:text-6xl font-medium leading-[1.1] text-on-background mb-8 italic tracking-tight">
+                        构建低延迟的 WebAssembly 与 Rust 流处理架构
+                    </h1>
+<p class="text-xl text-on-surface-variant font-body leading-relaxed">
+                        探索如何利用 WebAssembly 的沙箱特性与 Rust 的内存安全性，在边缘计算场景下实现亚毫秒级的实时数据处理。
+                    </p>
+</header>
+<figure class="mb-16 aspect-[21/9] bg-surface-container-low overflow-hidden rounded-sm">
+<img alt="Abstract visualization of data nodes and neural pathways" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="Abstract geometric visualization of glowing digital data streams and nodes in a dark architectural space with cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3LarAUk75Tdi_mpDZxnobM_ZWeMupt3niVVoYv9qGbsPPDGqtIvqPc_I9fh8mIQ9vWwCBXCWWM0p50wznE4XMh3tt5gqAhrVcAswSi9Ezi-rMG58L9QDm-PXTSd0g2TDE2MhrZH1M9QHH4D3F489WGQU59aBv3b-eSGUorQAYvU1D2zcvYoeUfh4s5-qOxYUoe3mox59O9x--JW7EgW1G3kNvAQhkyT95TYoFaGrnKSQ1r8Llz22fq8GBPrfb9JtY0n3I0Ygo7e0"/>
+</figure>
+<div class="space-y-12 text-on-background leading-relaxed font-body text-lg">
+<section id="intro">
+<h2 class="serif text-3xl mb-6">核心设计理念</h2>
+<p>
+                            在现代分布式系统中，**低延迟**已不再是一项奢侈品，而是基础要求。随着数据产生在网络边缘（Edge），传统的将数据回传至中心化云端的架构由于光速限制和网络拥塞，已无法满足金融交易、自动驾驶和工业物联网的需求。
+                        </p>
+<p class="mt-4">
+                            我们的研究重点在于将处理逻辑推向靠近数据源的地方。通过将 Rust 编译为 WebAssembly (Wasm)，我们可以在一个极其轻量级的运行环境中（如 Wasmtime 或 Wasmer）执行代码，这不仅能获得接近原生的性能，还具备了云原生环境所必需的冷启动速度。
+                        </p>
+</section>
+<!-- Quote Block -->
+<blockquote class="my-12 border-l-2 border-surface-tint pl-10 ml-4 italic serif text-2xl text-on-surface-variant leading-snug">
+                        "WebAssembly 既不是 Web，也不是 Assembly，它是分布式系统架构自容器化以来最重要的演进。"
+                    </blockquote>
+<section id="wasm-rust">
+<h2 class="serif text-3xl mb-6">Wasm 与 Rust 的契合</h2>
+<p>
+                            Rust 的所有权模型（Ownership）在编译阶段就消除了数据竞争，这与 Wasm 的线性内存模型（Linear Memory）天然契合。在流处理中，我们最担心的就是垃圾回收（GC）引起的暂停（STW）。
+                        </p>
+<div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="p-8 bg-surface-container-low">
+<span class="font-label text-primary text-xs uppercase tracking-widest">Rust Advantage</span>
+<h4 class="mt-2 font-bold text-lg">零成本抽象</h4>
+<p class="mt-2 text-sm text-on-surface-variant">代码在编译为 Wasm 字节码时，其性能损失几乎可以忽略不计。</p>
+</div>
+<div class="p-8 bg-surface-container-low">
+<span class="font-label text-primary text-xs uppercase tracking-widest">Wasm Sandbox</span>
+<h4 class="mt-2 font-bold text-lg">隔离与安全</h4>
+<p class="mt-2 text-sm text-on-surface-variant">基于 Capabilities 的安全模型确保了不可信插件在边缘端的安全执行。</p>
+</div>
+</div>
+</section>
+<section id="performance">
+<h2 class="serif text-3xl mb-6">性能基准测试</h2>
+<div class="p-8 bg-surface-container-lowest border border-outline-variant/15">
+<div class="flex justify-between items-end h-64 gap-4">
+<div class="flex-1 flex flex-col items-center">
+<div class="w-full bg-surface-container-highest rounded-t-sm" style="height: 100%"></div>
+<span class="mt-4 font-label text-[10px] uppercase">Node.js</span>
+<span class="font-label text-xs font-bold">150ms</span>
+</div>
+<div class="flex-1 flex flex-col items-center">
+<div class="w-full bg-surface-container-highest rounded-t-sm" style="height: 60%"></div>
+<span class="mt-4 font-label text-[10px] uppercase">Docker/Go</span>
+<span class="font-label text-xs font-bold">85ms</span>
+</div>
+<div class="flex-1 flex flex-col items-center">
+<div class="w-full bg-primary rounded-t-sm" style="height: 12%"></div>
+<span class="mt-4 font-label text-[10px] uppercase text-primary font-bold">Wasm/Rust</span>
+<span class="font-label text-xs font-bold text-primary">14ms</span>
+</div>
+</div>
+<div class="mt-8 text-center text-xs text-on-surface-variant font-label uppercase tracking-widest">
+                                延迟对比：冷启动 + 10k 消息处理 (ms)
+                            </div>
+</div>
+</section>
+<section id="implementation">
+<h2 class="serif text-3xl mb-6">工程实践与代码</h2>
+<p class="mb-6">
+                            以下是定义一个简单的流处理算子的 Rust 代码片段。我们利用 `wit-bindgen` 来生成跨语言的接口调用（Canonical ABI）。
+                        </p>
+<div class="rounded-sm overflow-hidden bg-slate-900 shadow-2xl">
+<div class="flex items-center justify-between px-4 py-2 bg-slate-800/50">
+<div class="flex gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-red-500/30"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-yellow-500/30"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-green-500/30"></div>
+</div>
+<span class="font-label text-[10px] text-slate-400 uppercase tracking-widest">processor.rs</span>
+</div>
+<div class="p-6 overflow-x-auto">
+<pre class="font-label text-sm text-slate-300 leading-relaxed"><code><span class="text-blue-400">use</span> wit_bindgen_rust::export;
+
+<span class="text-blue-400">export!</span>(<span class="text-green-400">"processor.wit"</span>);
+
+<span class="text-blue-400">struct</span> <span class="text-yellow-400">Processor</span>;
+
+<span class="text-blue-400">impl</span> <span class="text-yellow-400">processor::Processor</span> <span class="text-blue-400">for</span> <span class="text-yellow-400">Processor</span> {
+    <span class="text-blue-400">fn</span> <span class="text-yellow-400">process_stream</span>(input: Vec&lt;u8&gt;) -&gt; Vec&lt;u8&gt; {
+        <span class="text-slate-500">// 极简的向量化处理逻辑</span>
+        input.into_iter()
+            .map(|x| x.wrapping_add(<span class="text-orange-400">1</span>))
+            .collect()
+    }
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="border-t border-outline-variant/15 pt-12">
+<h2 class="serif text-3xl mb-6 italic">结语</h2>
+<p>
+                            WebAssembly 的兴起并不是为了取代现有的容器技术，而是为了填补在超高密度、极低延迟场景下的空白。Rust 与 Wasm 的结合，正逐渐成为新一代高性能基础设施的标准配置。
+                        </p>
+</section>
+</div>
+<!-- Authorship -->
+<footer class="mt-20 py-12 bg-surface-container-low px-8 flex flex-col md:flex-row items-center gap-8">
+<img alt="Author profile portrait" class="w-20 h-20 rounded-full object-cover grayscale" data-alt="Professional portrait of a male tech researcher with glasses, minimalist aesthetic, soft studio lighting, high key background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwKxsWUPUM61tFIHEhe_afEVswPHybyGdsm7Lpp4gSW6jKFsfCy3d_V33QTC3poN8MTR5iforXpD5rbqy_bNioZ8j5tD6k1hplg-J9pLChl0ZWk3koWCSPAcYn8IsIKgUBqVFshBY8OBZ2AbgZre_Dj7OVHiQEf_feviifC9XcKPNHjFvJfN257JBoOfCpYTp_MtfFRzxLJROYmszvUfElPagU8JLUmHIWiT10ZrD-QU34azSAAqeB-1yCLIjMVWHiNkelHgr5g4s"/>
+<div class="text-center md:text-left">
+<h4 class="font-bold text-lg font-body">陈子墨 (Zimo Chen)</h4>
+<p class="text-on-surface-variant text-sm mt-1">
+                            高级系统架构师，专注于分布式 runtime 与 WebAssembly 生态研究。
+                        </p>
+<div class="mt-4 flex justify-center md:justify-start gap-4">
+<a class="text-xs font-label text-primary hover:underline" href="#">TWITTER</a>
+<a class="text-xs font-label text-primary hover:underline" href="#">GITHUB</a>
+<a class="text-xs font-label text-primary hover:underline" href="#">WEBSITE</a>
+</div>
+</div>
+</footer>
+</article>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-slate-200/15 bg-slate-50">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-8 py-12 max-w-7xl mx-auto gap-6">
+<div class="text-slate-600 font-['Space_Grotesk'] uppercase tracking-widest text-xs">
+                © 2024 THE DIGITAL CURATOR. BUILT WITH TECHNICAL PRECISION AND LITERARY ELEGANCE.
+            </div>
+<div class="flex gap-8">
+<a class="text-slate-500 font-['Space_Grotesk'] uppercase tracking-widest text-xs hover:text-slate-900 underline underline-offset-4" href="#">RSS FEED</a>
+<a class="text-slate-500 font-['Space_Grotesk'] uppercase tracking-widest text-xs hover:text-slate-900 underline underline-offset-4" href="#">TWITTER</a>
+<a class="text-slate-500 font-['Space_Grotesk'] uppercase tracking-widest text-xs hover:text-slate-900 underline underline-offset-4" href="#">GITHUB</a>
+<a class="text-slate-500 font-['Space_Grotesk'] uppercase tracking-widest text-xs hover:text-slate-900 underline underline-offset-4" href="#">SOURCE</a>
+</div>
+</div>
+</footer>
+</body></html>

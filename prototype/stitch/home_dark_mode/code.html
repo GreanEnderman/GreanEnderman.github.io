@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Digital Curator | 数字策展人</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#2c358e",
+                        "surface": "#0c0f0f",
+                        "primary": "#4c56af",
+                        "on-primary": "#f9f6ff",
+                        "on-surface-variant": "#adb3b4",
+                        "on-background": "#f9f9f9",
+                        "tertiary-container": "#005046",
+                        "on-tertiary-container": "#a2ffed",
+                        "primary-dim": "#4049a2",
+                        "primary-container": "#3f48a1",
+                        "surface-container-highest": "#2d3435",
+                        "on-error-container": "#fe8983",
+                        "secondary-dim": "#c1d8e4",
+                        "on-surface": "#f9f9f9",
+                        "surface-container-lowest": "#050606",
+                        "error-dim": "#9f403d",
+                        "error": "#fe8983",
+                        "inverse-on-surface": "#2d3435",
+                        "tertiary": "#94f0df",
+                        "on-tertiary-fixed-variant": "#a2ffed",
+                        "surface-tint": "#929bfa",
+                        "surface-variant": "#2d3435",
+                        "surface-container-high": "#1e2425",
+                        "on-tertiary": "#003730",
+                        "on-secondary": "#0c1418",
+                        "surface-bright": "#343a3b",
+                        "surface-dim": "#0c0f0f",
+                        "surface-container-low": "#171c1d",
+                        "surface-container": "#1e2425",
+                        "tertiary-dim": "#94f0df",
+                        "secondary": "#cfe6f2",
+                        "on-primary-container": "#e0e0ff",
+                        "on-secondary-fixed": "#cfe6f2",
+                        "inverse-primary": "#4c56af",
+                        "on-secondary-container": "#cfe6f2",
+                        "on-primary-fixed-variant": "#ced1ff",
+                        "tertiary-fixed-dim": "#94f0df",
+                        "secondary-fixed-dim": "#c1d8e4",
+                        "on-error": "#4e0309",
+                        "primary-fixed": "#e0e0ff",
+                        "outline-variant": "#444849",
+                        "inverse-surface": "#f9f9f9",
+                        "secondary-container": "#2d424c",
+                        "background": "#0c0f0f",
+                        "primary-fixed-dim": "#ced1ff",
+                        "tertiary-fixed": "#a2ffed",
+                        "on-tertiary-fixed": "#00201a",
+                        "outline": "#8e9293",
+                        "error-container": "#752121",
+                        "secondary-fixed": "#cfe6f2",
+                        "on-secondary-fixed-variant": "#c1d8e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Newsreader", "serif"],
+                        "body": ["Manrope", "sans-serif"],
+                        "label": ["Space Grotesk", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; background-color: #0c0f0f; color: #f9f9f9; }
+        .font-newsreader { font-family: 'Newsreader', serif; }
+        .font-space { font-family: 'Space Grotesk', monospace; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl bg-gradient-to-b from-slate-100/5 to-transparent">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+<div class="text-2xl font-serif italic text-slate-950 dark:text-white font-['Newsreader'] tracking-tight">
+                The Digital Curator
+            </div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-slate-950 dark:text-white border-b-2 border-slate-900 dark:border-slate-100 pb-1 font-['Newsreader'] italic transition-all duration-200" href="#">Essays</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors font-['Newsreader'] italic" href="#">Tech</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors font-['Newsreader'] italic" href="#">Projects</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors font-['Newsreader'] italic" href="#">Archive</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-50 cursor-pointer hover:opacity-80 transition-opacity duration-300">dark_mode</span>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-20 px-6 max-w-7xl mx-auto">
+<!-- Hero Section: Manifesto -->
+<header class="mb-32">
+<div class="max-w-3xl">
+<span class="font-space text-xs uppercase tracking-[0.3em] text-primary mb-6 block">Site Manifesto</span>
+<h1 class="font-newsreader text-6xl md:text-8xl italic font-light tracking-tight leading-[1.1] mb-8">
+                    在代码与匠心的<br/>
+<span class="text-primary-dim">交汇处</span>探索。
+                </h1>
+<p class="font-body text-xl text-on-surface-variant max-w-xl leading-relaxed">
+                    一个关于技术架构、设计哲学与数字美学的策展空间。我们在这里审视每一行代码的文学价值，以及每一个像素后的工程逻辑。
+                </p>
+</div>
+</header>
+<!-- Featured Section (Bento Grid Style) -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-32">
+<div class="md:col-span-8 group relative overflow-hidden bg-surface-container-low p-8 flex flex-col justify-end min-h-[500px]">
+<div class="absolute inset-0 opacity-40 transition-transform duration-700 group-hover:scale-105">
+<img alt="Featured Project" class="w-full h-full object-cover" data-alt="Modern minimalist workspace with mechanical keyboard and soft ambient lighting, cinematic photography style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvW7ciVM4jwSSKdg39iCxgxDIiqLOKHTyRY9ucbyf_Tbj6IMwA3_8vvBEChloGvVLLqLT8Oena_vFijeyfpIrD7TeLrbvRb2cE2CZ0fsZro_66N0dMxOx8o6f6fDF3UqVqUedL4n_5itUt1JJ9ixEYq0ejPMDsmh6xg-66IHWbXKxi5mrOX8ecyQjxrB4OFWZR9_2rNlFajt_SvI4PQJ_fdXvODFKvOni1Gtpx6ZLb58FUBl14u5N6ODuUIF6D5j1QEPJ0Cz_f5_A"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent"></div>
+</div>
+<div class="relative z-10">
+<span class="font-space text-xs uppercase tracking-widest text-primary-fixed mb-4 block">精选项目</span>
+<h2 class="font-newsreader text-4xl italic mb-4">Project: Aeon 架构演进录</h2>
+<p class="font-body text-on-surface-variant max-w-md mb-6">探索高并发系统中的优雅设计模式，如何在极简代码中维持系统的强韧性。</p>
+<a class="inline-flex items-center gap-2 font-space text-sm tracking-widest hover:gap-4 transition-all" href="#">
+                        VIEW CASE STUDY <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</a>
+</div>
+</div>
+<div class="md:col-span-4 flex flex-col gap-8">
+<div class="bg-surface-container-low p-8 flex-1 group">
+<span class="font-space text-xs uppercase tracking-widest text-tertiary mb-4 block">最新动态</span>
+<div class="space-y-6">
+<div class="border-b border-outline-variant/15 pb-4">
+<p class="font-space text-[10px] text-on-surface-variant mb-1">2024.05.21</p>
+<h3 class="font-body text-lg font-medium group-hover:text-primary transition-colors">发布了《Rust 内存模型的诗学》</h3>
+</div>
+<div class="border-b border-outline-variant/15 pb-4">
+<p class="font-space text-[10px] text-on-surface-variant mb-1">2024.05.18</p>
+<h3 class="font-body text-lg font-medium group-hover:text-primary transition-colors">完成了 Curator UI 2.0 的设计系统更新</h3>
+</div>
+<div>
+<p class="font-space text-[10px] text-on-surface-variant mb-1">2024.05.15</p>
+<h3 class="font-body text-lg font-medium group-hover:text-primary transition-colors">在北京 ArchDaily 论坛分享数字设计趋势</h3>
+</div>
+</div>
+</div>
+<div class="bg-primary p-8 flex flex-col justify-between aspect-square md:aspect-auto">
+<span class="material-symbols-outlined text-on-primary text-4xl">architecture</span>
+<div>
+<h3 class="font-newsreader text-3xl italic text-on-primary mb-2">策展计划</h3>
+<p class="font-body text-on-primary/80 text-sm">订阅周刊，获取最前沿的数字工艺见解。</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Horizontal Columns: Essays & Tech -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-20 mb-32">
+<!-- Tech Column -->
+<div>
+<div class="flex items-baseline justify-between mb-12 border-b border-outline-variant/20 pb-4">
+<h2 class="font-newsreader text-3xl italic">技术栏目 / Tech</h2>
+<a class="font-space text-xs tracking-widest text-on-surface-variant hover:text-primary" href="#">ALL LOGS</a>
+</div>
+<div class="space-y-12">
+<article class="group">
+<div class="flex gap-6">
+<span class="font-space text-2xl text-surface-variant font-light">01</span>
+<div>
+<h3 class="font-body text-xl font-semibold mb-2 group-hover:text-primary transition-colors">分布式共识协议的直觉化理解</h3>
+<p class="font-body text-on-surface-variant text-sm mb-4 leading-relaxed">不仅仅是 Raft 或 Paxos，我们讨论的是人类协作在机器逻辑中的映射。</p>
+<div class="flex gap-3">
+<span class="px-2 py-1 bg-secondary-container text-on-secondary-container font-space text-[10px] uppercase tracking-tighter">Distributed Systems</span>
+<span class="px-2 py-1 bg-surface-container-highest text-on-surface-variant font-space text-[10px] uppercase tracking-tighter">12 min read</span>
+</div>
+</div>
+</div>
+</article>
+<article class="group">
+<div class="flex gap-6">
+<span class="font-space text-2xl text-surface-variant font-light">02</span>
+<div>
+<h3 class="font-body text-xl font-semibold mb-2 group-hover:text-primary transition-colors">WebAssembly: 浏览器中的性能艺术</h3>
+<p class="font-body text-on-surface-variant text-sm mb-4 leading-relaxed">重塑前端开发的边界，将计算密集型任务带入近乎原生速度的新纪元。</p>
+<div class="flex gap-3">
+<span class="px-2 py-1 bg-secondary-container text-on-secondary-container font-space text-[10px] uppercase tracking-tighter">Performance</span>
+<span class="px-2 py-1 bg-surface-container-highest text-on-surface-variant font-space text-[10px] uppercase tracking-tighter">8 min read</span>
+</div>
+</div>
+</div>
+</article>
+</div>
+</div>
+<!-- Essay Column -->
+<div class="md:pl-10 border-l border-outline-variant/10">
+<div class="flex items-baseline justify-between mb-12 border-b border-outline-variant/20 pb-4">
+<h2 class="font-newsreader text-3xl italic">随笔栏目 / Essays</h2>
+<a class="font-space text-xs tracking-widest text-on-surface-variant hover:text-primary" href="#">THE ARCHIVE</a>
+</div>
+<div class="space-y-12">
+<article class="flex flex-col gap-4">
+<span class="font-space text-[10px] uppercase tracking-widest text-on-surface-variant">2024.04.12 — 思想录</span>
+<h3 class="font-newsreader text-2xl italic leading-snug hover:text-primary cursor-pointer transition-colors">为什么优秀的软件架构看起来像是一首诗？</h3>
+<p class="font-body text-on-surface-variant leading-relaxed italic border-l-2 border-primary pl-6 py-2">
+                            “清晰的表达源于对复杂性的极度尊重，而非逃避。”
+                        </p>
+</article>
+<article class="flex flex-col gap-4">
+<span class="font-space text-[10px] uppercase tracking-widest text-on-surface-variant">2024.03.28 — 城市观察</span>
+<h3 class="font-newsreader text-2xl italic leading-snug hover:text-primary cursor-pointer transition-colors">数字游民在里斯本的三个黄昏</h3>
+<p class="font-body text-on-surface-variant leading-relaxed">关于连接、孤独以及在不同地理纬度下工作的本质思考。</p>
+</article>
+</div>
+</div>
+</section>
+<!-- Projects Horizontal Scroll Area -->
+<section class="mb-32">
+<h2 class="font-newsreader text-3xl italic mb-12">最新项目 / Selected Works</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="bg-surface-container p-1 group cursor-pointer">
+<div class="aspect-[4/5] overflow-hidden mb-6">
+<img alt="Project A" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Abstract algorithmic art with fluid geometric patterns in obsidian and silver tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJXIvsd0bI3_XSP17uJ7IDfvkV1WZ6f8Grf3yfJTZSJDBs8NMTAKka01n7IHEtrQqpL64sF5D4dcHvQg5LSk0r1N-KCdDZUswuG1tYKIyc1hUkXlV-7UoRxG5WdEmOvO-pTl7dGc4QPhLSVwq4FN3j6fkoOFYCedXerBt26dy0keg27sgrCNI9Ik7KaP46R13mjZDxxByRrvvJEmGOwmMfBZTT_OelRDa1y5xHxKbT8-L_aeCR_uxDjUb0mSpLg7T9ZgB7Q1sXiKs"/>
+</div>
+<div class="px-4 pb-4">
+<h4 class="font-body font-bold text-lg mb-1">AuraOS Interface</h4>
+<p class="font-space text-[10px] text-on-surface-variant uppercase tracking-widest">UI/UX · Motion Design</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container p-1 group cursor-pointer md:mt-12">
+<div class="aspect-[4/5] overflow-hidden mb-6">
+<img alt="Project B" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Macro photo of glowing lines of code on a high-resolution dark display, neon accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHv5n8bqV4OSJjNZOeX6aFyxNoperikuRuuNlrX1CwuatJMdeoDMKN88ehYwD2S9-2jk4ASfIRVzBmgEI_dfj4ixslqj1hA-mwqI5IUO-jRkPcLVuV6xr_NFATG45A7bSNjnllv0sV3V9_7HU5TRYohoFaEJpd2Lq_Pkbd1XhLtCcoFLhr-iIJYdAVPgxOnbvJ2d19LyHjTJ_F6fm4TAwQbg2IQc3wmH-0FGNWPLqqAnFvCwNkviqblXji2B0wIwKdtfMbo2cA8Oo"/>
+</div>
+<div class="px-4 pb-4">
+<h4 class="font-body font-bold text-lg mb-1">Synthetix Engine</h4>
+<p class="font-space text-[10px] text-on-surface-variant uppercase tracking-widest">C++ · Graphics Programming</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container p-1 group cursor-pointer">
+<div class="aspect-[4/5] overflow-hidden mb-6">
+<img alt="Project C" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Minimalist laptop on a wooden table with morning sunlight through a window casting shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7BSxCVv298iIUeIhkrM_cJvIVfRgLaVEQoclsy2yy10PuRaKlk_BPJOTC8EFFkMb0VvtrIp901Joz_sw8G1DNEzt43T-cjLV-WaWO4DxLKsPQLephRUnqTSPx713Os1SURinoAqNVJKUCeIDJ3nfCjodp7awhIqm5TcRHy-3hK2kYrfWc7m9c4dRDf0e6BHFfyab0MJkt-imY8zb4Q5jhDZb-nxhpLR8ViBFaFHMYRLYB2qp3z8IJETzeG6boQtcblU0Q6pGhLFE"/>
+</div>
+<div class="px-4 pb-4">
+<h4 class="font-body font-bold text-lg mb-1">Elysium Blog Theme</h4>
+<p class="font-space text-[10px] text-on-surface-variant uppercase tracking-widest">Design System · Web</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-slate-200/15 dark:border-slate-800/15 bg-slate-50 dark:bg-slate-950">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-8 py-12 max-w-7xl mx-auto gap-6">
+<div class="font-['Space_Grotesk'] uppercase tracking-widest text-xs text-slate-600 dark:text-slate-400 max-w-md text-center md:text-left leading-loose">
+                © 2024 The Digital Curator. Built with technical precision and literary elegance.
+            </div>
+<div class="flex gap-8">
+<a class="font-['Space_Grotesk'] uppercase tracking-widest text-xs text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 underline underline-offset-4 transition-all" href="#">RSS Feed</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-widest text-xs text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 underline underline-offset-4 transition-all" href="#">Twitter</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-widest text-xs text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 underline underline-offset-4 transition-all" href="#">GitHub</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-widest text-xs text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 underline underline-offset-4 transition-all" href="#">Source</a>
+</div>
+</div>
+</footer>
+</body></html>

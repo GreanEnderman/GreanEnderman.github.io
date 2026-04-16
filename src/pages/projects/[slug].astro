@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectLayout from '@layouts/ProjectLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+
+  return projects.map((project) => {
+    // 处理嵌套路径
+    const slugParts = project.slug.split('/');
+    const finalSlug = slugParts[slugParts.length - 1];
+
+    return {
+      params: { slug: finalSlug },
+      props: { project },
+    };
+  });
+}
+
+const { project } = Astro.props;
+---
+
+<ProjectLayout project={project} />

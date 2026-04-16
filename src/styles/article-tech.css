@@ -1,0 +1,17 @@
+/* Prose styles for tech articles */
+.serif {
+  font-family: 'Newsreader', serif;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #dde4e5;
+  border-radius: 10px;
+}

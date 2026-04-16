@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#2c358e",
+                        "surface": "#0c0f0f",
+                        "primary": "#4c56af",
+                        "on-primary": "#f9f6ff",
+                        "on-surface-variant": "#adb3b4",
+                        "on-background": "#ebeeef",
+                        "tertiary-container": "#005046",
+                        "on-tertiary-container": "#a2ffed",
+                        "primary-dim": "#4049a2",
+                        "primary-container": "#3f48a1",
+                        "surface-container-highest": "#2d3435",
+                        "on-error-container": "#fe8983",
+                        "secondary-dim": "#415660",
+                        "on-surface": "#ebeeef",
+                        "surface-container-lowest": "#060808",
+                        "error-dim": "#4e0309",
+                        "error": "#9f403d",
+                        "inverse-on-surface": "#2d3435",
+                        "tertiary": "#94f0df",
+                        "on-tertiary-fixed-variant": "#006f62",
+                        "surface-tint": "#4c56af",
+                        "surface-variant": "#2d3435",
+                        "surface-container-high": "#1a1e1f",
+                        "on-tertiary": "#003730",
+                        "on-secondary": "#1a2a32",
+                        "surface-bright": "#1a1e1f",
+                        "surface-dim": "#0c0f0f",
+                        "surface-container-low": "#0c0f0f",
+                        "surface-container": "#131718",
+                        "tertiary-dim": "#94f0df",
+                        "secondary": "#cfe6f2",
+                        "on-primary-container": "#e0e0ff",
+                        "on-secondary-fixed": "#cfe6f2",
+                        "inverse-primary": "#4c56af",
+                        "on-secondary-container": "#cfe6f2",
+                        "on-primary-fixed-variant": "#ced1ff",
+                        "tertiary-fixed-dim": "#94f0df",
+                        "secondary-fixed-dim": "#415660",
+                        "on-error": "#601410",
+                        "primary-fixed": "#e0e0ff",
+                        "outline-variant": "#434849",
+                        "inverse-surface": "#ebeeef",
+                        "secondary-container": "#2d424c",
+                        "background": "#0c0f0f",
+                        "primary-fixed-dim": "#ced1ff",
+                        "tertiary-fixed": "#a2ffed",
+                        "on-tertiary-fixed": "#00201a",
+                        "outline": "#8c9293",
+                        "error-container": "#93000a",
+                        "secondary-fixed": "#cfe6f2",
+                        "on-secondary-fixed-variant": "#4d626c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Newsreader", "serif"],
+                        "body": ["Manrope", "sans-serif"],
+                        "label": ["Space Grotesk", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; background-color: #0c0f0f; color: #ebeeef; }
+        .serif-text { font-family: 'Newsreader', serif; }
+        .label-text { font-family: 'Space Grotesk', monospace; }
+        .essay-content p { margin-bottom: 2rem; line-height: 2; letter-spacing: 0.02em; font-size: 1.125rem; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl bg-gradient-to-b from-slate-100/5 to-transparent">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+<div class="text-2xl font-serif italic text-slate-950 dark:text-white font-['Newsreader'] italic tracking-tight">
+                The Digital Curator
+            </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-slate-950 dark:text-white border-b-2 border-slate-900 dark:border-slate-100 pb-1 font-['Newsreader'] italic tracking-tight" href="#">Essays</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors font-['Newsreader'] italic tracking-tight" href="#">Tech</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors font-['Newsreader'] italic tracking-tight" href="#">Projects</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors font-['Newsreader'] italic tracking-tight" href="#">Archive</a>
+</div>
+<div class="flex items-center gap-4 text-slate-900 dark:text-slate-50">
+<button class="hover:opacity-80 transition-opacity duration-300">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-24">
+<!-- Essay Header -->
+<header class="max-w-4xl mx-auto px-6 mb-16 md:mb-24">
+<div class="flex flex-col gap-6">
+<div class="label-text uppercase tracking-widest text-xs text-primary flex items-center gap-4">
+<span>ARCHITECTURE &amp; PHILOSOPHY</span>
+<span class="w-12 h-[1px] bg-outline-variant opacity-30"></span>
+<span>2024.11.12</span>
+</div>
+<h1 class="serif-text text-5xl md:text-7xl font-light leading-tight tracking-tight text-on-background italic">
+                    无声的建筑师：<br/>
+                    论不可见细节的力量
+                </h1>
+<p class="text-on-surface-variant text-lg md:text-xl font-light max-w-2xl leading-relaxed italic">
+                    “真正的完整并不存在于宏大的结构之中，而是在那些被大多数人忽略的转折与接缝里。”
+                </p>
+</div>
+</header>
+<!-- Hero Image Section -->
+<div class="w-full h-[614px] mb-20 relative overflow-hidden">
+<img class="w-full h-full object-cover grayscale brightness-75 hover:grayscale-0 transition-all duration-1000" data-alt="monochromatic minimalist architectural detail of concrete stairs and sharp shadows in soft morning light, elegant grey tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmONxJ2popMRkvHJbZYheWYx56UqqdgT-wdE4iIyUXfyfmwBjNz0fH3UYzG0zC51ENKrwFfMYaQdt5vqYjwx4ynRfKOlAMFyC82APQWokslPPtDCjaC2QW1GCdl-UW0A_JNXORFmysYhWarMNNTLcINfkjqNixSFoZ5Lt7EpwGhB445JDqtyR7Lzch0rHcWxvJ4qiDWGRp5BIZgxNRX4hKwYDfB9d2u6IqOXsWgQUV1wRifIrXRk4XYZ-HqJlziQXIVMTx72G02Mg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60"></div>
+</div>
+<!-- Essay Body -->
+<article class="max-w-screen-md mx-auto px-6 essay-content">
+<div class="flex flex-col gap-8 md:gap-12">
+<p class="first-letter:text-6xl first-letter:float-left first-letter:mr-4 first-letter:font-serif first-letter:italic">
+                    当我们谈论建筑，我们往往在谈论那些显而易见的东西：摩天大楼的金属外壳、教堂高耸入云的尖顶、或是美术馆里那道令人屏息的螺旋楼梯。然而，真正决定一个空间“灵魂”的，往往是那些不可见的细节。这些细节如同无声的建筑师，在感官的边缘低语，构建出一种难以言喻的秩序感。
+                </p>
+<p>
+                    所谓的“不可见细节”，并非指它们在物理上不存在，而是指它们在日常观察中被隐匿于功能性之后。一扇门的阻尼感、两块石材拼接处那仅仅两毫米的阴影缝、或者是午后阳光落在磨砂玻璃上那一抹柔和的漫反射。这些元素不参与视觉的狂欢，却深度参与了身体对环境的感知。
+                </p>
+<!-- Asymmetric Pull Quote -->
+<blockquote class="md:ml-[-80px] my-12 border-l-2 border-surface-tint pl-10">
+<p class="serif-text text-3xl md:text-4xl italic font-light text-on-background leading-snug">
+                        “留白不是缺失，而是一种高度集中的存在方式。”
+                    </p>
+</blockquote>
+<p>
+                    在东方哲学里，这种对细节的执着被赋予了更深层次的文学色彩。我们讲究“气韵”，讲究“留白”。留白不是简单的虚无，而是为了让那些真实存在的线条和材质得以呼吸。当一个设计被填得太满，它的细节就死去了。相反，在一个极简的场域里，即使是一次细微的笔触偏转，都能激起观察者内心的涟漪。
+                </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-12">
+<div class="bg-surface-container-low p-8 flex flex-col gap-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">architecture</span>
+<h3 class="serif-text text-xl italic">精密性</h3>
+<p class="text-sm opacity-80 leading-relaxed m-0">技术上的精准是艺术表达的前提。没有严谨的结构支撑，所谓的感性只是一座空中楼阁。</p>
+</div>
+<div class="bg-surface-container-low p-8 flex flex-col gap-4 md:mt-12">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">fluid</span>
+<h3 class="serif-text text-xl italic">流动性</h3>
+<p class="text-sm opacity-80 leading-relaxed m-0">空间应当随着光线和时间的流逝而演变。动态的细节让建筑拥有了生命。</p>
+</div>
+</div>
+<p>
+                    现代主义建筑大师路德维希·密斯·凡德罗曾言：“上帝在细节之中。”这句话在数字时代依然掷地有声。在屏幕背后，代码的优雅与像素的排列同样构成了不可见的建筑。一个流畅的过渡动画、一次及时的反馈提醒，其本质与物理空间中的接缝处理并无二致。
+                </p>
+<p>
+                    最终，我们要追求的不是那种喧宾夺主的“设计感”，而是一种“不被打扰”的和谐。当用户在一个空间里感到舒适，却又说不出具体是因为什么时，这位无声的建筑师便完成了他的使命。
+                </p>
+</div>
+</article>
+<!-- Footer Meta -->
+<footer class="max-w-4xl mx-auto px-6 mt-20 pt-12 border-t border-outline-variant/15">
+<div class="flex flex-wrap gap-4 items-center justify-between">
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container label-text text-[10px] rounded-full">DESIGN PHILOSOPHY</span>
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container label-text text-[10px] rounded-full">ESSAY</span>
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container label-text text-[10px] rounded-full">MINIMALISM</span>
+</div>
+<div class="flex items-center gap-6 text-on-surface-variant">
+<button class="flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">favorite</span>
+<span class="label-text text-xs">1.2K</span>
+</button>
+<button class="flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">share</span>
+<span class="label-text text-xs">SHARE</span>
+</button>
+</div>
+</div>
+</footer>
+</main>
+<!-- Global Footer -->
+<footer class="w-full border-t border-slate-200/15 dark:border-slate-800/15 bg-slate-50 dark:bg-slate-950">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-8 py-12 max-w-7xl mx-auto gap-6">
+<div class="font-['Space_Grotesk'] uppercase tracking-widest text-xs text-slate-600 dark:text-slate-400 text-center md:text-left">
+                © 2024 The Digital Curator. Built with technical precision and literary elegance.
+            </div>
+<div class="flex gap-8">
+<a class="font-['Space_Grotesk'] uppercase tracking-widest text-xs text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 underline underline-offset-4" href="#">RSS Feed</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-widest text-xs text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 underline underline-offset-4" href="#">Twitter</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-widest text-xs text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 underline underline-offset-4" href="#">GitHub</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-widest text-xs text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 underline underline-offset-4" href="#">Source</a>
+</div>
+</div>
+</footer>
+</body></html>

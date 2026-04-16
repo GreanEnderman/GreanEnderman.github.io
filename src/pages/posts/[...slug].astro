@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import PostLayoutTech from '@layouts/PostLayoutTech.astro';
+import PostLayoutEssay from '@layouts/PostLayoutEssay.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => {
+    return data.draft !== true;
+  });
+
+  return posts.map((post) => {
+    return {
+      params: { slug: post.slug },
+      props: { post },
+    };
+  });
+}
+
+const { post } = Astro.props;
+
+// 根据 template 字段选择布局
+const Layout = post.data.template === 'essay' ? PostLayoutEssay : PostLayoutTech;
+---
+
+<Layout post={post} />

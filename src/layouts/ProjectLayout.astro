@@ -1,0 +1,308 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { getRelatedPostsForProject } from '@lib/projects';
+import PostCard from '@components/post/PostCard.astro';
+import type { CollectionEntry } from 'astro:content';
+import '@styles/prose.css';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+const relatedPosts = await getRelatedPostsForProject(project);
+
+// 状态标签映射
+const statusLabels = {
+  'in-progress': '进行中',
+  'completed': '已完成',
+  'archived': '已归档',
+};
+
+const statusColors = {
+  'in-progress': 'tertiary',
+  'completed': 'primary',
+  'archived': 'secondary',
+};
+---
+
+<BaseLayout title={project.data.title} description={project.data.description}>
+  <article class="project-article">
+    <div class="project-container">
+      <!-- 项目头部 -->
+      <header class="project-header">
+        <div class="project-meta-top">
+          <span class={`project-status status-${statusColors[project.data.status]}`}>
+            {statusLabels[project.data.status]}
+          </span>
+          <time class="project-date" datetime={project.data.date.toISOString()}>
+            {new Date(project.data.date).toLocaleDateString('zh-CN', {
+              year: 'numeric',
+              month: 'long'
+            })}
+          </time>
+        </div>
+
+        <h1 class="project-title">{project.data.title}</h1>
+
+        {project.data.description && (
+          <p class="project-description">{project.data.description}</p>
+        )}
+
+        <!-- 技术栈 -->
+        {project.data.stack.length > 0 && (
+          <div class="project-stack">
+            <h3 class="stack-title">技术栈</h3>
+            <div class="stack-list">
+              {project.data.stack.map((tech) => (
+                <span class="stack-item">{tech}</span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- 外部链接 -->
+        {(project.data.repo || project.data.demo) && (
+          <div class="project-links">
+            {project.data.repo && (
+              <a href={project.data.repo} class="project-link" target="_blank" rel="noopener noreferrer">
+                <span class="link-icon">→</span>
+                <span>查看代码</span>
+              </a>
+            )}
+            {project.data.demo && (
+              <a href={project.data.demo} class="project-link project-link-primary" target="_blank" rel="noopener noreferrer">
+                <span class="link-icon">↗</span>
+                <span>在线演示</span>
+              </a>
+            )}
+          </div>
+        )}
+      </header>
+
+      <!-- 项目正文 -->
+      <div class="prose project-content">
+        <Content />
+      </div>
+
+      <!-- 相关文章 -->
+      {relatedPosts.length > 0 && (
+        <section class="related-posts">
+          <h2 class="related-title">相关文章</h2>
+          <div class="related-grid">
+            {relatedPosts.map((post) => (
+              <PostCard post={post} />
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .project-article {
+    padding-top: 8rem;
+    padding-bottom: 6rem;
+    background: var(--background);
+  }
+
+  .project-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* 项目头部 */
+  .project-header {
+    margin-bottom: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--outline-variant);
+  }
+
+  .project-meta-top {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-status {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.25rem;
+  }
+
+  .status-primary {
+    background-color: var(--primary-container);
+    color: var(--on-primary-container);
+  }
+
+  .status-secondary {
+    background-color: var(--secondary-container);
+    color: var(--on-secondary-container);
+  }
+
+  .status-tertiary {
+    background-color: var(--tertiary-container);
+    color: var(--on-tertiary-container);
+  }
+
+  .project-date {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--on-surface-variant);
+  }
+
+  .project-title {
+    font-family: var(--font-headline);
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--on-surface);
+    margin-bottom: 1.5rem;
+  }
+
+  .project-description {
+    font-size: 1.375rem;
+    line-height: 1.6;
+    color: var(--on-surface-variant);
+    margin-bottom: 2rem;
+  }
+
+  /* 技术栈 */
+  .project-stack {
+    margin-bottom: 2rem;
+  }
+
+  .stack-title {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--on-surface-variant);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+
+  .stack-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .stack-item {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--surface-container-highest);
+    color: var(--on-surface);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+  }
+
+  /* 外部链接 */
+  .project-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--surface-container-high);
+    color: var(--on-surface);
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+
+  .project-link:hover {
+    background-color: var(--surface-container-highest);
+    transform: translateY(-2px);
+  }
+
+  .project-link-primary {
+    background-color: var(--primary);
+    color: var(--on-primary);
+  }
+
+  .project-link-primary:hover {
+    background-color: var(--primary-dim);
+  }
+
+  .link-icon {
+    font-size: 1.25rem;
+  }
+
+  /* 项目正文 */
+  .project-content {
+    margin-bottom: 4rem;
+  }
+
+  /* 相关文章 */
+  .related-posts {
+    margin-top: 5rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--outline-variant);
+  }
+
+  .related-title {
+    font-family: var(--font-headline);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: var(--on-surface);
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* 响应式 */
+  @media (max-width: 768px) {
+    .project-article {
+      padding-top: 6rem;
+      padding-bottom: 4rem;
+    }
+
+    .project-container {
+      padding: 0 1.5rem;
+    }
+
+    .project-title {
+      font-size: 2.5rem;
+    }
+
+    .project-description {
+      font-size: 1.125rem;
+    }
+
+    .project-links {
+      flex-direction: column;
+    }
+
+    .project-link {
+      justify-content: center;
+    }
+
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

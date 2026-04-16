@@ -1,0 +1,246 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  featured?: boolean;
+}
+
+const { project, featured = false } = Astro.props;
+
+// 状态标签映射
+const statusLabels = {
+  'in-progress': '进行中',
+  'completed': '已完成',
+  'archived': '已归档',
+};
+
+const statusColors = {
+  'in-progress': 'tertiary',
+  'completed': 'primary',
+  'archived': 'secondary',
+};
+---
+
+<article class={`project-card ${featured ? 'project-card-featured' : ''}`}>
+  <a href={`/projects/${project.slug.split('/').pop()}`} class="project-card-link">
+    {project.data.cover && (
+      <div class="project-card-cover">
+        <img src={project.data.cover} alt={project.data.title} />
+      </div>
+    )}
+
+    <div class="project-card-content">
+      <div class="project-card-header">
+        <span class={`project-status status-${statusColors[project.data.status]}`}>
+          {statusLabels[project.data.status]}
+        </span>
+        <time class="project-date" datetime={project.data.date.toISOString()}>
+          {new Date(project.data.date).toLocaleDateString('zh-CN', {
+            year: 'numeric',
+            month: 'long'
+          })}
+        </time>
+      </div>
+
+      <h3 class="project-card-title">{project.data.title}</h3>
+
+      {project.data.description && (
+        <p class="project-card-description">{project.data.description}</p>
+      )}
+
+      {project.data.stack.length > 0 && (
+        <div class="project-card-stack">
+          {project.data.stack.slice(0, 4).map((tech) => (
+            <span class="stack-badge">{tech}</span>
+          ))}
+          {project.data.stack.length > 4 && (
+            <span class="stack-badge stack-more">+{project.data.stack.length - 4}</span>
+          )}
+        </div>
+      )}
+    </div>
+  </a>
+</article>
+
+<style>
+  .project-card {
+    background-color: var(--surface-container-low);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: background-color 0.3s, transform 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-card:hover {
+    background-color: var(--surface-container-high);
+    transform: translateY(-2px);
+  }
+
+  .project-card-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .project-card-cover {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background-color: var(--surface-container-highest);
+  }
+
+  .project-card-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+
+  .project-card:hover .project-card-cover img {
+    transform: scale(1.05);
+  }
+
+  .project-card-content {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .project-status {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+  }
+
+  .status-primary {
+    background-color: var(--primary-container);
+    color: var(--on-primary-container);
+  }
+
+  .status-secondary {
+    background-color: var(--secondary-container);
+    color: var(--on-secondary-container);
+  }
+
+  .status-tertiary {
+    background-color: var(--tertiary-container);
+    color: var(--on-tertiary-container);
+  }
+
+  .project-date {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--on-surface-variant);
+  }
+
+  .project-card-title {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--on-surface);
+    margin-bottom: 0.75rem;
+    transition: color 0.2s;
+  }
+
+  .project-card:hover .project-card-title {
+    color: var(--primary);
+  }
+
+  .project-card-description {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--on-surface-variant);
+    margin-bottom: 1rem;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .project-card-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: auto;
+  }
+
+  .stack-badge {
+    display: inline-block;
+    padding: 0.25rem 0.625rem;
+    background-color: var(--surface-container-highest);
+    color: var(--on-surface);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    border-radius: 0.25rem;
+    font-weight: 500;
+  }
+
+  .stack-more {
+    background-color: var(--primary-container);
+    color: var(--on-primary-container);
+  }
+
+  /* Featured 样式 */
+  .project-card-featured {
+    grid-column: span 2;
+  }
+
+  .project-card-featured .project-card-content {
+    padding: 2rem;
+  }
+
+  .project-card-featured .project-card-title {
+    font-size: 2rem;
+  }
+
+  .project-card-featured .project-card-description {
+    font-size: 1.0625rem;
+    -webkit-line-clamp: 4;
+  }
+
+  /* 响应式 */
+  @media (max-width: 768px) {
+    .project-card-featured {
+      grid-column: span 1;
+    }
+
+    .project-card-content {
+      padding: 1.25rem;
+    }
+
+    .project-card-featured .project-card-content {
+      padding: 1.5rem;
+    }
+
+    .project-card-title {
+      font-size: 1.25rem;
+    }
+
+    .project-card-featured .project-card-title {
+      font-size: 1.5rem;
+    }
+
+    .project-card-description {
+      font-size: 0.875rem;
+    }
+  }
+</style>

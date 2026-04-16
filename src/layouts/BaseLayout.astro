@@ -1,0 +1,129 @@
+---
+import SiteHeader from '@components/site/SiteHeader.astro';
+import SiteFooter from '@components/site/SiteFooter.astro';
+import '@styles/tokens.css';
+import '@styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = '数字馆长 | 代码与匠心', description = '一份关于技术思考与文学感悟的策展' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>{title}</title>
+  <meta name="description" content={description} />
+
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+  <!-- Google Fonts including Noto Serif SC for Chinese -->
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Manrope:wght@200..800&family=Space+Grotesk:wght@300..700&family=Noto+Serif+SC:wght@300;400;700&display=swap" rel="stylesheet"/>
+
+  <!-- Tailwind CSS -->
+  <script is:inline src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script is:inline id="tailwind-config">
+    tailwind.config = {
+      darkMode: ["class", '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed-dim": "#94f0df",
+            "surface-variant": "#dde4e5",
+            "on-primary-fixed": "#2c358e",
+            "on-secondary": "#f2faff",
+            "primary-fixed-dim": "#ced1ff",
+            "inverse-surface": "#0c0f0f",
+            "on-tertiary-fixed": "#005046",
+            "on-surface": "#2d3435",
+            "background": "#f9f9f9",
+            "outline-variant": "#adb3b4",
+            "on-primary-fixed-variant": "#4953ac",
+            "surface-container": "#ebeeef",
+            "on-secondary-fixed-variant": "#495f69",
+            "surface-bright": "#f9f9f9",
+            "tertiary-container": "#a2ffed",
+            "on-error-container": "#752121",
+            "surface": "#f9f9f9",
+            "error": "#9f403d",
+            "secondary-fixed": "#cfe6f2",
+            "error-dim": "#4e0309",
+            "primary-fixed": "#e0e0ff",
+            "surface-container-low": "#f2f4f4",
+            "tertiary": "#006b5f",
+            "surface-dim": "#d4dbdd",
+            "secondary-fixed-dim": "#c1d8e4",
+            "on-surface-variant": "#5a6061",
+            "surface-container-lowest": "#ffffff",
+            "on-error": "#fff7f6",
+            "on-secondary-container": "#40555f",
+            "primary-container": "#e0e0ff",
+            "on-tertiary-fixed-variant": "#006f62",
+            "secondary-container": "#cfe6f2",
+            "on-tertiary-container": "#006458",
+            "tertiary-fixed": "#a2ffed",
+            "secondary-dim": "#415660",
+            "on-primary-container": "#3f48a1",
+            "on-tertiary": "#e3fff7",
+            "primary-dim": "#4049a2",
+            "on-background": "#2d3435",
+            "primary": "#4c56af",
+            "inverse-on-surface": "#9c9d9d",
+            "tertiary-dim": "#005e53",
+            "surface-container-high": "#e4e9ea",
+            "error-container": "#fe8983",
+            "surface-container-highest": "#dde4e5",
+            "inverse-primary": "#929bfa",
+            "outline": "#757c7d",
+            "on-secondary-fixed": "#2d424c",
+            "on-primary": "#f9f6ff",
+            "secondary": "#4d626c",
+            "surface-tint": "#4c56af"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "fontFamily": {
+            "headline": ["Noto Serif SC", "Newsreader", "serif"],
+            "body": ["Noto Serif SC", "Manrope", "serif"],
+            "label": ["Space Grotesk", "sans-serif"]
+          }
+        },
+      },
+    }
+  </script>
+
+  <!-- Theme initialization script (runs before page render to prevent flash) -->
+  <script is:inline>
+    const theme = (() => {
+      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+        return localStorage.getItem('theme');
+      }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'light';
+    })();
+
+    if (theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+  </script>
+</head>
+<body class="selection:bg-primary-container selection:text-on-primary-container">
+  <SiteHeader />
+  <slot />
+  <SiteFooter />
+</body>
+</html>

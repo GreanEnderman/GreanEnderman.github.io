@@ -1,0 +1,97 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getAllProjects } from '@lib/projects';
+
+const projects = await getAllProjects();
+
+// 状态映射
+const statusMap = {
+  'in-progress': { label: '开发中', color: 'primary', animate: true },
+  'completed': { label: '已完成', color: 'tertiary', animate: false },
+  'archived': { label: '已归档', color: 'outline', animate: false },
+};
+---
+
+<BaseLayout title="精选项目 | 数字馆长">
+  <main class="pt-32 pb-24 px-6 max-w-7xl mx-auto min-h-screen">
+    <!-- Header Section (Asymmetric Editorial Style) -->
+    <header class="mb-20 flex flex-col md:flex-row md:items-end gap-8">
+      <div class="max-w-2xl">
+        <p class="font-label uppercase tracking-widest text-xs text-primary mb-4">Chronicle of Works</p>
+        <h1 class="text-6xl md:text-8xl font-headline italic tracking-tighter leading-none text-on-surface">精选项目</h1>
+      </div>
+      <div class="md:pb-2 max-w-sm">
+        <p class="text-on-surface-variant font-body leading-relaxed">
+          一个精心策划的技术实验、开源贡献和工业级数字架构档案。
+        </p>
+      </div>
+    </header>
+
+    <!-- Project Archive List (Editorial "No-Line" Layout) -->
+    <section class="space-y-0">
+      {projects.map((project, index) => {
+        const status = statusMap[project.data.status];
+        const bgClass = index % 2 === 1 ? 'bg-[var(--surface-container-low)]' : '';
+
+        return (
+          <article class={`project-row group grid grid-cols-1 md:grid-cols-12 items-start py-12 px-4 transition-all duration-300 rounded-lg hover:bg-[var(--surface-container)] ${bgClass}`}>
+            <div class="md:col-span-1 hidden md:block">
+              <span class="font-label text-outline-variant text-sm">{(index + 1).toString().padStart(2, '0')}</span>
+            </div>
+            <div class="md:col-span-4 flex flex-col gap-2">
+              <div class="flex items-center gap-3">
+                <span class={`w-2 h-2 rounded-full bg-${status.color} ${status.animate ? 'animate-pulse' : ''}`}></span>
+                <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">{status.label}</span>
+              </div>
+              <h3 class="text-3xl font-headline italic text-on-surface group-hover:text-primary transition-colors">
+                <a href={`/projects/${project.slug}/`}>{project.data.title}</a>
+              </h3>
+              <div class="flex flex-wrap gap-2 mt-2">
+                {project.data.stack.slice(0, 3).map((tech) => (
+                  <span class="font-label text-[10px] px-2 py-0.5 bg-secondary-container text-on-secondary-container rounded-sm uppercase">{tech}</span>
+                ))}
+              </div>
+            </div>
+            <div class="md:col-span-4 mt-4 md:mt-0">
+              <p class="text-on-surface-variant font-body leading-relaxed pr-8">
+                {project.data.description}
+              </p>
+            </div>
+            <div class="md:col-span-2 mt-6 md:mt-0 flex gap-6 md:justify-end">
+              {project.data.repo && (
+                <a class="flex items-center gap-2 font-label text-xs uppercase tracking-widest hover:text-primary transition-colors" href={project.data.repo} target="_blank" rel="noopener noreferrer">
+                  代码仓库 <span class="material-symbols-outlined text-sm">arrow_outward</span>
+                </a>
+              )}
+              {project.data.demo && (
+                <a class="flex items-center gap-2 font-label text-xs uppercase tracking-widest hover:text-primary transition-colors" href={project.data.demo} target="_blank" rel="noopener noreferrer">
+                  演示 <span class="material-symbols-outlined text-sm">visibility</span>
+                </a>
+              )}
+            </div>
+            {project.data.cover && (
+              <div class="md:col-span-1 hidden md:flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                <div class="w-16 h-16 bg-surface-container-highest rounded overflow-hidden">
+                  <img alt={project.data.title} class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src={project.data.cover}/>
+                </div>
+              </div>
+            )}
+          </article>
+        );
+      })}
+    </section>
+
+    <!-- CTA Section -->
+    <section class="mt-32 p-12 bg-[var(--surface-container-low)] rounded-lg text-center">
+      <h2 class="text-4xl font-headline italic mb-4">有项目想合作吗？</h2>
+      <p class="max-w-md mx-auto text-on-surface-variant mb-8 font-body">我目前可接受精选的架构咨询和数字艺术合作计划。</p>
+      <button class="bg-primary text-on-primary px-8 py-3 rounded-sm font-label uppercase tracking-widest text-sm hover:opacity-90 transition-opacity">
+        发起咨询
+      </button>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  /* Light mode hover handled by Tailwind utility classes */
+</style>

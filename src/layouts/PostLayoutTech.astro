@@ -1,0 +1,204 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import PostMeta from '@components/post/PostMeta.astro';
+import PostTOC from '@components/post/PostTOC.astro';
+import TagList from '@components/post/TagList.astro';
+import PostNavigation from '@components/post/PostNavigation.astro';
+import RelatedPosts from '@components/post/RelatedPosts.astro';
+import { getAdjacentPosts, getRelatedPosts } from '@lib/posts';
+import type { CollectionEntry } from 'astro:content';
+import '@styles/prose.css';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await post.render();
+
+// 获取上下篇和相关文章
+const { prev, next } = await getAdjacentPosts(post.slug);
+const relatedPosts = await getRelatedPosts(post, 3);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article class="tech-article">
+    <div class="article-container">
+      <!-- 侧边栏：目录 -->
+      {post.data.toc && headings.length > 0 && (
+        <aside class="toc-sidebar">
+          <PostTOC headings={headings} />
+        </aside>
+      )}
+
+      <!-- 主内容区 -->
+      <div class="article-main">
+        <!-- 文章头部 -->
+        <header class="article-header">
+          <div class="article-meta-top">
+            <span class="article-category">{post.data.category}</span>
+            <PostMeta post={post} />
+          </div>
+
+          <h1 class="article-title">{post.data.title}</h1>
+
+          {post.data.description && (
+            <p class="article-description">{post.data.description}</p>
+          )}
+
+          {post.data.tags.length > 0 && (
+            <TagList tags={post.data.tags} />
+          )}
+        </header>
+
+        <!-- 文章正文 -->
+        <div class="prose prose-tech">
+          <Content />
+        </div>
+
+        <!-- 文章底部 -->
+        <footer class="article-footer">
+          {post.data.updated && (
+            <p class="article-updated">
+              最后更新：{new Date(post.data.updated).toLocaleDateString('zh-CN')}
+            </p>
+          )}
+        </footer>
+
+        <!-- 上下篇导航 -->
+        <PostNavigation prev={prev} next={next} />
+
+        <!-- 相关文章 -->
+        <RelatedPosts posts={relatedPosts} />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .tech-article {
+    padding-top: 8rem;
+    padding-bottom: 4rem;
+    background: var(--background);
+  }
+
+  .article-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  /* 目录侧边栏 */
+  .toc-sidebar {
+    position: sticky;
+    top: 8rem;
+    max-height: calc(100vh - 10rem);
+    overflow-y: auto;
+  }
+
+  /* 主内容区 */
+  .article-main {
+    max-width: 800px;
+  }
+
+  /* 文章头部 */
+  .article-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--outline-variant);
+  }
+
+  .article-meta-top {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .article-category {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .article-title {
+    font-family: var(--font-headline);
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--on-surface);
+    margin-bottom: 1rem;
+  }
+
+  .article-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--on-surface-variant);
+    margin-bottom: 1.5rem;
+  }
+
+  /* 技术文章特定样式 */
+  .prose-tech {
+    /* 代码块强调 */
+  }
+
+  .prose-tech :global(pre) {
+    background-color: var(--surface-container-highest);
+    border: 1px solid var(--outline-variant);
+  }
+
+  .prose-tech :global(code) {
+    font-family: var(--font-mono);
+  }
+
+  /* 文章底部 */
+  .article-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--outline-variant);
+  }
+
+  .article-updated {
+    font-size: 0.875rem;
+    color: var(--on-surface-variant);
+    font-style: italic;
+  }
+
+  /* 响应式 */
+  @media (max-width: 1024px) {
+    .article-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .toc-sidebar {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .tech-article {
+      padding-top: 6rem;
+    }
+
+    .article-container {
+      padding: 0 1.5rem;
+    }
+
+    .article-title {
+      font-size: 2rem;
+    }
+
+    .article-description {
+      font-size: 1.125rem;
+    }
+  }
+</style>

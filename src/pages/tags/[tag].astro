@@ -1,0 +1,67 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PostCard from '@components/post/PostCard.astro';
+import { getAllTags, getPostsByTag, getRelatedTags } from '@lib/tags';
+
+export async function getStaticPaths() {
+  const tags = await getAllTags();
+  return tags.map(({ tag, count }) => ({
+    params: { tag },
+    props: { count }
+  }));
+}
+
+const { tag } = Astro.params;
+const { count } = Astro.props;
+const posts = await getPostsByTag(tag);
+const relatedTags = await getRelatedTags(tag, 5);
+---
+
+<BaseLayout title={`标签：${tag} | 数字馆长`}>
+  <main class="pt-32 pb-24 px-6 max-w-7xl mx-auto">
+    <!-- Header -->
+    <header class="mb-16 md:mb-24 border-b border-[var(--outline-variant)] border-opacity-30 pb-12">
+      <div class="max-w-2xl">
+        <div class="flex items-center gap-4 mb-6">
+          <a href="/posts/" class="font-label text-xs uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors">
+            ← 返回文章
+          </a>
+          <span class="w-8 h-px bg-outline-variant/30"></span>
+          <span class="font-label text-xs uppercase tracking-widest text-on-surface-variant">标签</span>
+        </div>
+        <h1 class="text-6xl md:text-8xl font-headline font-bold tracking-tighter text-[var(--on-surface)] mb-6">
+          {tag}
+        </h1>
+        <p class="text-lg text-on-surface-variant font-body">
+          共 <span class="font-bold text-primary">{count}</span> 篇文章
+        </p>
+      </div>
+    </header>
+
+    <!-- Posts Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+
+    <!-- Related Tags -->
+    {relatedTags.length > 0 && (
+      <section class="border-t border-[var(--outline-variant)] border-opacity-30 pt-12">
+        <h2 class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant mb-8">
+          相关标签
+        </h2>
+        <div class="flex flex-wrap gap-3">
+          {relatedTags.map((relatedTag) => (
+            <a
+              href={`/tags/${relatedTag}/`}
+              class="bg-secondary-container text-on-secondary-container px-4 py-2 text-sm font-label rounded-sm hover:bg-secondary transition-colors"
+            >
+              {relatedTag}
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </main>
+</BaseLayout>

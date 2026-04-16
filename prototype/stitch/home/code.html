@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-Hans"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>数字馆长 | 代码与匠心</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts including Noto Serif SC for Chinese -->
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;family=Space+Grotesk:wght@300..700&amp;family=Noto+Serif+SC:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "tertiary-fixed-dim": "#94f0df",
+                "surface-variant": "#dde4e5",
+                "on-primary-fixed": "#2c358e",
+                "on-secondary": "#f2faff",
+                "primary-fixed-dim": "#ced1ff",
+                "inverse-surface": "#0c0f0f",
+                "on-tertiary-fixed": "#005046",
+                "on-surface": "#2d3435",
+                "background": "#f9f9f9",
+                "outline-variant": "#adb3b4",
+                "on-primary-fixed-variant": "#4953ac",
+                "surface-container": "#ebeeef",
+                "on-secondary-fixed-variant": "#495f69",
+                "surface-bright": "#f9f9f9",
+                "tertiary-container": "#a2ffed",
+                "on-error-container": "#752121",
+                "surface": "#f9f9f9",
+                "error": "#9f403d",
+                "secondary-fixed": "#cfe6f2",
+                "error-dim": "#4e0309",
+                "primary-fixed": "#e0e0ff",
+                "surface-container-low": "#f2f4f4",
+                "tertiary": "#006b5f",
+                "surface-dim": "#d4dbdd",
+                "secondary-fixed-dim": "#c1d8e4",
+                "on-surface-variant": "#5a6061",
+                "surface-container-lowest": "#ffffff",
+                "on-error": "#fff7f6",
+                "on-secondary-container": "#40555f",
+                "primary-container": "#e0e0ff",
+                "on-tertiary-fixed-variant": "#006f62",
+                "secondary-container": "#cfe6f2",
+                "on-tertiary-container": "#006458",
+                "tertiary-fixed": "#a2ffed",
+                "secondary-dim": "#415660",
+                "on-primary-container": "#3f48a1",
+                "on-tertiary": "#e3fff7",
+                "primary-dim": "#4049a2",
+                "on-background": "#2d3435",
+                "primary": "#4c56af",
+                "inverse-on-surface": "#9c9d9d",
+                "tertiary-dim": "#005e53",
+                "surface-container-high": "#e4e9ea",
+                "error-container": "#fe8983",
+                "surface-container-highest": "#dde4e5",
+                "inverse-primary": "#929bfa",
+                "outline": "#757c7d",
+                "on-secondary-fixed": "#2d424c",
+                "on-primary": "#f9f6ff",
+                "secondary": "#4d626c",
+                "surface-tint": "#4c56af"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "fontFamily": {
+                "headline": ["Noto Serif SC", "Newsreader", "serif"],
+                "body": ["Noto Serif SC", "Manrope", "serif"],
+                "label": ["Space Grotesk", "sans-serif"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: #f9f9f9;
+            line-height: 1.8;
+            letter-spacing: 0.02em;
+        }
+        .serif-italic { font-family: 'Newsreader', serif; font-style: italic; }
+        .mono-label { font-family: 'Space Grotesk', monospace; letter-spacing: 0.15em; }
+        h1, h2, h3, h4 { line-height: 1.3; }
+    </style>
+</head>
+<body class="text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl bg-gradient-to-b from-slate-100/5 to-transparent">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+<a class="text-2xl font-headline font-bold text-slate-950 tracking-tight hover:opacity-80 transition-opacity duration-300" href="#">
+                数字馆长
+            </a>
+<!-- Desktop Links -->
+<div class="hidden md:flex items-center gap-8">
+<a class="font-headline tracking-tight text-slate-950 border-b-2 border-slate-900 pb-1" href="#">首页</a>
+<a class="font-headline tracking-tight text-slate-500 hover:text-slate-800 transition-colors" href="#">随笔</a>
+<a class="font-headline tracking-tight text-slate-500 hover:text-slate-800 transition-colors" href="#">技术</a>
+<a class="font-headline tracking-tight text-slate-500 hover:text-slate-800 transition-colors" href="#">项目</a>
+<a class="font-headline tracking-tight text-slate-500 hover:text-slate-800 transition-colors" href="#">归档</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-slate-900 hover:opacity-80 transition-opacity" data-icon="dark_mode">dark_mode</button>
+<button class="md:hidden material-symbols-outlined text-slate-900" data-icon="menu">menu</button>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-24">
+<!-- Hero Section: Site Manifesto -->
+<section class="max-w-7xl mx-auto px-6 mb-32">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+<div class="lg:col-span-8">
+<span class="mono-label text-xs uppercase tracking-widest text-on-surface-variant mb-6 block">站点宣言</span>
+<h1 class="font-headline text-5xl md:text-7xl text-on-background leading-tight tracking-tight">
+                        在 <span class="text-primary">代码</span> 与 <span class="text-secondary">匠心</span> 的交汇处探索。
+                    </h1>
+</div>
+<div class="lg:col-span-4 pb-2">
+<p class="text-lg text-on-surface-variant font-body leading-relaxed max-w-sm">
+                        一份关于技术思考与文学感悟的策展。以装帧师的灵魂，打造数字时代的器物。
+                    </p>
+</div>
+</div>
+</section>
+<!-- Featured Section (Asymmetric Bento) -->
+<section class="max-w-7xl mx-auto px-6 mb-32">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Main Featured Essay -->
+<div class="lg:col-span-2 group">
+<div class="bg-surface-container-low overflow-hidden transition-colors duration-500 hover:bg-surface-container-high h-full flex flex-col">
+<div class="aspect-video overflow-hidden">
+<img alt="Close up of vintage typewriter keys" class="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKdgzSu80cizDh-v8cGd6w0Q0I__swM_lEd71PRwk5aLdAI8vJKtkADNt43fnUPfEQZHQAalmBDj1cUzcPgkeA3p4HT93krEd-yMmNzoPSjGHAMvPcMPK72-JKFd27A05p5PiVOc8r7HYV1TLm3CO7DcBey9dFAm40BFDABCZ8SRMVFfkQCM80R4XrxO8xwQy1oJXXDO7IvHmETDRf52jSy69iMHMWxHw7_9Oi26E6IXTNjAjHKf_dD1tgoYQyq7rNBSYl3QIk-JE"/>
+</div>
+<div class="p-10 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-6">
+<span class="mono-label text-xs tracking-widest text-primary font-bold">精选文章</span>
+<span class="mono-label text-xs text-on-surface-variant">2024年10月</span>
+</div>
+<h2 class="font-headline text-3xl mb-6 leading-snug">寂静的架构：为何极简主义是软件设计的极致复杂。</h2>
+<p class="font-body text-on-surface-variant mb-8 line-clamp-3">在这个功能过剩的时代，我们探讨为什么删除 90% 的界面可能是你做过的最激进的技术决策。</p>
+<div class="mt-auto">
+<a class="inline-flex items-center gap-2 font-label text-xs uppercase tracking-widest text-on-surface border-b border-primary pb-1" href="#">阅读全文</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Featured Project -->
+<div class="group">
+<div class="bg-surface-container-highest h-full p-10 flex flex-col">
+<span class="mono-label text-xs tracking-widest text-secondary font-bold mb-8">最新项目</span>
+<div class="mb-10 aspect-square bg-white shadow-sm flex items-center justify-center p-8 overflow-hidden">
+<img alt="Minimalist data visualization dashboard" class="w-full h-full object-contain mix-blend-multiply opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDg6rryTXRuV4oTWLkYZdmeFt6JthS7usVyfe41J01pj5WVUHqtvHren_3FZF-Yeq6MoAEDkTJ13Fvh_bRv7GcbyThfDBIPL_OKjmqzr00O0hkOF1LXO1wYMwmxsJtT6M8neoJQPK7av1JQ-9_Vkvv6SRg-OaZYrvozpN3LDKIWCFsCM-vRgHzVhJNGssg39ZwDJG_txfT1vi8xE54KT9W5G7PyKaGX3fFCvJJvx1Kqw93q_wNZTLvpZBRMKaoDFb3jN_KuOLxongM"/>
+</div>
+<h3 class="font-headline text-2xl mb-4">Lume 引擎</h3>
+<p class="font-body text-sm text-on-surface-variant mb-8">专为现代网页打造的轻量化渲染引擎，专注于数学上的优雅与极致性能。</p>
+<div class="mt-auto flex flex-wrap gap-2 mb-8">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 text-[10px] mono-label rounded-full">RUST</span>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 text-[10px] mono-label rounded-full">WASM</span>
+</div>
+<a class="material-symbols-outlined text-4xl text-primary" data-icon="arrow_outward" href="#">arrow_outward</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Split Sections: Tech vs Essays -->
+<section class="max-w-7xl mx-auto px-6 mb-32">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-24">
+<!-- Recent Tech -->
+<div>
+<h3 class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant mb-12 flex items-center gap-4">
+<span class="w-8 h-[1px] bg-outline-variant"></span> 最新技术
+                    </h3>
+<div class="space-y-12">
+<article class="group cursor-pointer">
+<span class="mono-label text-[10px] text-primary mb-2 block">技术笔记</span>
+<h4 class="font-headline text-2xl group-hover:text-primary transition-colors">为 100/100 核心 Web 指标优化 Astro</h4>
+<p class="font-body text-on-surface-variant text-sm mt-3">深入探讨局部注水策略与图像优化流水线。</p>
+</article>
+<article class="group cursor-pointer">
+<span class="mono-label text-[10px] text-primary mb-2 block">指南</span>
+<h4 class="font-headline text-2xl group-hover:text-primary transition-colors">2024 年的状态管理：少即是多</h4>
+<p class="font-body text-on-surface-variant text-sm mt-3">为什么我们正在回归原生浏览器 API 和全局信号。</p>
+</article>
+<article class="group cursor-pointer">
+<span class="mono-label text-[10px] text-primary mb-2 block">资源</span>
+<h4 class="font-headline text-2xl group-hover:text-primary transition-colors">现代 Web 开发者的藏书架</h4>
+<p class="font-body text-on-surface-variant text-sm mt-3">一份塑造我视野的精选书籍与仓库列表。</p>
+</article>
+</div>
+</div>
+<!-- Recent Essays -->
+<div>
+<h3 class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant mb-12 flex items-center gap-4">
+<span class="w-8 h-[1px] bg-outline-variant"></span> 最新随笔
+                    </h3>
+<div class="space-y-12">
+<article class="group cursor-pointer">
+<span class="mono-label text-[10px] text-secondary mb-2 block">观察</span>
+<h4 class="font-headline text-2xl group-hover:text-secondary transition-colors">长距离开发者的孤独</h4>
+<p class="font-body text-on-surface-variant text-sm mt-3">在逻辑与语法之间的寂静中寻找禅意。</p>
+</article>
+<article class="group cursor-pointer">
+<span class="mono-label text-[10px] text-secondary mb-2 block">文化</span>
+<h4 class="font-headline text-2xl group-hover:text-secondary transition-colors">数字园艺与数字存档</h4>
+<p class="font-body text-on-surface-variant text-sm mt-3">重新思考我们在互联网上保存转瞬即逝想法的方式。</p>
+</article>
+<article class="group cursor-pointer">
+<span class="mono-label text-[10px] text-secondary mb-2 block">哲学</span>
+<h4 class="font-headline text-2xl group-hover:text-secondary transition-colors">慢工具赞</h4>
+<p class="font-body text-on-surface-variant text-sm mt-3">为什么我仍然使用机械键盘和钢笔起草初稿。</p>
+</article>
+</div>
+</div>
+</div>
+</section>
+<!-- Latest Updates Timeline -->
+<section class="max-w-3xl mx-auto px-6 mb-32 bg-surface-container-low p-12 lg:p-20">
+<h3 class="font-headline text-3xl mb-12">动态更新</h3>
+<div class="space-y-16 relative">
+<!-- Timeline Line -->
+<div class="absolute left-0 top-0 bottom-0 w-[1px] bg-outline-variant opacity-30 ml-4 lg:ml-0"></div>
+<div class="relative pl-12 lg:pl-16">
+<div class="absolute left-[-4px] top-2 w-2 h-2 rounded-full bg-primary ring-4 ring-background"></div>
+<span class="mono-label text-[10px] uppercase text-on-surface-variant block mb-2">2024年11月12日</span>
+<p class="font-body text-sm leading-relaxed">发布了 <span class="font-bold text-on-background">Lume 引擎</span> v2.4.0 版本。在 Web 渲染器中增加了对次表面散射的支持。</p>
+</div>
+<div class="relative pl-12 lg:pl-16">
+<div class="absolute left-[-4px] top-2 w-2 h-2 rounded-full bg-secondary ring-4 ring-background"></div>
+<span class="mono-label text-[10px] uppercase text-on-surface-variant block mb-2">2024年10月28日</span>
+<p class="font-body text-sm leading-relaxed">读完了《玻璃珠游戏》。近期将发布一篇关于系统性思维的长文随笔。</p>
+</div>
+<div class="relative pl-12 lg:pl-16">
+<div class="absolute left-[-4px] top-2 w-2 h-2 rounded-full bg-tertiary ring-4 ring-background"></div>
+<span class="mono-label text-[10px] uppercase text-on-surface-variant block mb-2">2024年10月15日</span>
+<p class="font-body text-sm leading-relaxed">将整个博客后台迁移至 Astro 4.0。站点访问速度提升了 40%。</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-slate-200/15 bg-slate-50">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-8 py-12 max-w-7xl mx-auto gap-6">
+<div class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px] text-slate-600 max-w-md text-center md:text-left">
+                © 2024 数字馆长。以技术之精密与文学之优雅构建。
+            </div>
+<div class="flex gap-8">
+<a class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px] text-slate-500 hover:text-slate-900 underline underline-offset-4 transition-colors" href="#">RSS 订阅</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px] text-slate-500 hover:text-slate-900 underline underline-offset-4 transition-colors" href="#">Twitter</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px] text-slate-500 hover:text-slate-900 underline underline-offset-4 transition-colors" href="#">GitHub</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px] text-slate-500 hover:text-slate-900 underline underline-offset-4 transition-colors" href="#">源码</a>
+</div>
+</div>
+</footer>
+</body></html>

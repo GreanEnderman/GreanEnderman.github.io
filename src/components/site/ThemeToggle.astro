@@ -1,0 +1,50 @@
+---
+// 主题切换组件
+---
+
+<button
+  id="theme-toggle"
+  class="material-symbols-outlined text-slate-900 dark:text-slate-50 hover:opacity-80 transition-opacity cursor-pointer"
+  aria-label="Toggle theme"
+>
+  <span class="dark:hidden">dark_mode</span>
+  <span class="hidden dark:inline">light_mode</span>
+</button>
+
+<script>
+  // 主题切换逻辑
+  const theme = (() => {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+      return localStorage.getItem('theme');
+    }
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  })();
+
+  if (theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
+
+  if (theme) {
+    window.localStorage.setItem('theme', theme);
+  }
+
+  const handleToggleClick = () => {
+    const element = document.documentElement;
+    const isDark = element.getAttribute('data-theme') === 'dark';
+
+    if (isDark) {
+      element.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      element.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  };
+
+  document.getElementById('theme-toggle')?.addEventListener('click', handleToggleClick);
+</script>

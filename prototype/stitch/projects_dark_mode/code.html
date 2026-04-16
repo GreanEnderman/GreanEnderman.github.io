@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>项目档案 | The Digital Curator</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;family=Space+Grotesk:wght@300..700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed": "#2c358e",
+                    "surface": "#0c0f0f",
+                    "primary": "#4c56af",
+                    "on-primary": "#f9f6ff",
+                    "on-surface-variant": "#adb3b4",
+                    "on-background": "#f9f9f9",
+                    "tertiary-container": "#005e53",
+                    "on-tertiary-container": "#a2ffed",
+                    "primary-dim": "#4049a2",
+                    "primary-container": "#3f48a1",
+                    "surface-container-highest": "#2d3435",
+                    "on-error-container": "#fe8983",
+                    "secondary-dim": "#415660",
+                    "on-surface": "#f9f9f9",
+                    "surface-container-lowest": "#050606",
+                    "error-dim": "#4e0309",
+                    "error": "#9f403d",
+                    "inverse-on-surface": "#2d3435",
+                    "tertiary": "#94f0df",
+                    "on-tertiary-fixed-variant": "#006f62",
+                    "surface-tint": "#4c56af",
+                    "surface-variant": "#2d3435",
+                    "surface-container-high": "#1a1e1f",
+                    "on-tertiary": "#003730",
+                    "on-secondary": "#cfe6f2",
+                    "surface-bright": "#2d3435",
+                    "surface-dim": "#0c0f0f",
+                    "surface-container-low": "#131718",
+                    "surface-container": "#161b1c",
+                    "tertiary-dim": "#94f0df",
+                    "secondary": "#cfe6f2",
+                    "on-primary-container": "#e0e0ff",
+                    "on-secondary-fixed": "#2d424c",
+                    "inverse-primary": "#4c56af",
+                    "on-secondary-container": "#cfe6f2",
+                    "on-primary-fixed-variant": "#ced1ff",
+                    "tertiary-fixed-dim": "#94f0df",
+                    "secondary-fixed-dim": "#c1d8e4",
+                    "on-error": "#fff7f6",
+                    "primary-fixed": "#e0e0ff",
+                    "outline-variant": "#5a6061",
+                    "inverse-surface": "#f9f9f9",
+                    "secondary-container": "#4d626c",
+                    "background": "#0c0f0f",
+                    "primary-fixed-dim": "#ced1ff",
+                    "tertiary-fixed": "#a2ffed",
+                    "on-tertiary-fixed": "#005046",
+                    "outline": "#8b9293",
+                    "error-container": "#752121",
+                    "secondary-fixed": "#cfe6f2",
+                    "on-secondary-fixed-variant": "#495f69"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Newsreader"],
+                    "body": ["Manrope"],
+                    "label": ["Space Grotesk"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #0c0f0f;
+            color: #f9f9f9;
+        }
+        .serif-italic {
+            font-family: 'Newsreader', serif;
+            font-style: italic;
+        }
+        .tech-label {
+            font-family: 'Space Grotesk', monospace;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+        .glass-panel {
+            background: rgba(26, 30, 31, 0.7);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl bg-gradient-to-b from-slate-100/5 to-transparent">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+<div class="text-2xl font-serif italic text-slate-950 dark:text-white font-['Newsreader'] italic tracking-tight">
+                The Digital Curator
+            </div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors" href="#">Essays</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors" href="#">Tech</a>
+<a class="text-slate-950 dark:text-white border-b-2 border-slate-900 dark:border-slate-100 pb-1" href="#">Projects</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors" href="#">Archive</a>
+</div>
+<div class="flex items-center space-x-4">
+<button class="hover:opacity-80 transition-opacity duration-300 text-slate-900 dark:text-slate-50">
+<span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+</button>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-6 max-w-7xl mx-auto">
+<!-- Header Section -->
+<header class="mb-20">
+<h1 class="text-6xl md:text-8xl font-headline font-light tracking-tight mb-6">
+                项目档案 <span class="serif-italic text-primary">Archive</span>
+</h1>
+<p class="max-w-2xl text-on-surface-variant text-lg leading-relaxed">
+                在这里，我记录了从底层系统开发到现代 Web 应用的探索历程。每一个项目都是对技术边界的挑战，以及对数字美学的独特实践。
+            </p>
+</header>
+<!-- Bento Grid Projects -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Featured Project (Rust Engine) -->
+<div class="md:col-span-8 group relative overflow-hidden bg-surface-container-low p-8 rounded-lg border-none transition-all duration-500 hover:bg-surface-container-high">
+<div class="flex flex-col h-full">
+<div class="flex justify-between items-start mb-12">
+<span class="tech-label text-xs uppercase tracking-widest text-primary font-bold">Featured Project</span>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-tertiary-container text-on-tertiary-container text-[10px] tech-label rounded-full">开发中</span>
+</div>
+</div>
+<h3 class="text-4xl font-headline mb-4 group-hover:text-primary transition-colors">Aether Engine: 分布式渲染系统</h3>
+<p class="text-on-surface-variant mb-8 max-w-md">
+                        基于 Rust 开发的高性能分布式渲染引擎，利用 WebAssembly 实现跨平台边缘计算。通过自定义着色器语言实现实时光影追踪。
+                    </p>
+<div class="mt-auto flex flex-wrap gap-3">
+<span class="tech-label text-xs px-2 py-1 border border-outline-variant/30 text-on-surface-variant">Rust</span>
+<span class="tech-label text-xs px-2 py-1 border border-outline-variant/30 text-on-surface-variant">WASM</span>
+<span class="tech-label text-xs px-2 py-1 border border-outline-variant/30 text-on-surface-variant">Vulkan</span>
+<span class="tech-label text-xs px-2 py-1 border border-outline-variant/30 text-on-surface-variant">gRPC</span>
+</div>
+<div class="absolute right-0 bottom-0 w-1/3 opacity-20 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none">
+<img alt="Technical Drawing" class="w-full h-full object-cover" data-alt="Abstract technical blueprint showing complex geometric structures with glowing blue lines on a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIPw5MF15bp3pRNe3geGEkugg3UnMcUW2F1rqGHzyERzpPCWS_VNq5gP9f_7vC93JAtVq5JsvnLo-yrBMxCw-2lt1Mc_p25kykkvtwaxRLEIhiuEx7qXNwnASgF2E7rnvonCuUnHFL9trX7fPbzFhp4whN09vbU-NPgkhT357yrkvgnkDIHy3VBALjkgEHplrth5xo5t1-acbgSvV9S_C26GeyJTRftznXI6bHjt6OeMK9Ms7qn2D4rC6VEP2gJOzN8-bNU68PWMY"/>
+</div>
+</div>
+</div>
+<!-- Side Project (Typography Tool) -->
+<div class="md:col-span-4 bg-surface-container-low p-8 rounded-lg group hover:bg-surface-container-high transition-all">
+<div class="flex flex-col h-full">
+<div class="mb-6 flex justify-between items-center">
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container text-[10px] tech-label rounded-full">已完成</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="open_in_new">open_in_new</span>
+</div>
+<h3 class="text-2xl font-headline mb-3">Type-Flow</h3>
+<p class="text-sm text-on-surface-variant mb-6">
+                        专为排版设计的 CSS 工具链，提供动态流式缩放与垂直节奏控制系统。
+                    </p>
+<div class="mt-auto flex flex-wrap gap-2">
+<span class="tech-label text-[10px] text-on-surface-variant">TypeScript</span>
+<span class="tech-label text-[10px] text-on-surface-variant">PostCSS</span>
+</div>
+</div>
+</div>
+<!-- Project 3 (Data Viz) -->
+<div class="md:col-span-4 bg-surface-container-low p-8 rounded-lg group hover:bg-surface-container-high transition-all">
+<div class="flex flex-col h-full">
+<div class="mb-6 flex justify-between items-center">
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container text-[10px] tech-label rounded-full">已完成</span>
+<span class="material-symbols-outlined text-outline" data-icon="code">code</span>
+</div>
+<h3 class="text-2xl font-headline mb-3">Chronos 可视化</h3>
+<p class="text-sm text-on-surface-variant mb-6">
+                        对海量历史气象数据的交互式三维可视化，探索气候变化的宏观模式。
+                    </p>
+<div class="mt-auto flex flex-wrap gap-2">
+<span class="tech-label text-[10px] text-on-surface-variant">Three.js</span>
+<span class="tech-label text-[10px] text-on-surface-variant">D3.js</span>
+<span class="tech-label text-[10px] text-on-surface-variant">WebGL</span>
+</div>
+</div>
+</div>
+<!-- Project 4 (Smart Contract) -->
+<div class="md:col-span-4 bg-surface-container-low p-8 rounded-lg group hover:bg-surface-container-high transition-all">
+<div class="flex flex-col h-full">
+<div class="mb-6 flex justify-between items-center">
+<span class="px-3 py-1 bg-tertiary-container text-on-tertiary-container text-[10px] tech-label rounded-full">开发中</span>
+<span class="material-symbols-outlined text-outline" data-icon="lock">lock</span>
+</div>
+<h3 class="text-2xl font-headline mb-3">Helix Protocol</h3>
+<p class="text-sm text-on-surface-variant mb-6">
+                        基于智能合约的新一代去中心化内容确权协议，利用 ZK-Rollups 降低交易成本。
+                    </p>
+<div class="mt-auto flex flex-wrap gap-2">
+<span class="tech-label text-[10px] text-on-surface-variant">Solidity</span>
+<span class="tech-label text-[10px] text-on-surface-variant">Circom</span>
+</div>
+</div>
+</div>
+<!-- Project 5 (Design System) -->
+<div class="md:col-span-4 bg-primary p-8 rounded-lg group relative overflow-hidden">
+<div class="relative z-10 flex flex-col h-full">
+<h3 class="text-2xl font-headline text-on-primary mb-3">Curator System</h3>
+<p class="text-sm text-on-primary/80 mb-6">
+                        本项目所使用的底层设计系统，追求极致的文字表现力。
+                    </p>
+<div class="mt-auto flex flex-wrap gap-2">
+<span class="tech-label text-[10px] px-2 py-1 bg-white/20 text-on-primary rounded">Tailwind</span>
+<span class="tech-label text-[10px] px-2 py-1 bg-white/20 text-on-primary rounded">JSON-Config</span>
+</div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-br from-primary-dim to-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+</div>
+<!-- Section Transition -->
+<div class="mt-32 text-center">
+<p class="tech-label text-xs uppercase tracking-[0.4em] text-outline mb-4">Interested in collaboration?</p>
+<a class="group inline-flex items-center gap-4 text-3xl font-headline hover:text-primary transition-colors" href="#">
+                开始对话 <span class="serif-italic">Let's Talk</span>
+<span class="material-symbols-outlined text-2xl transform group-hover:translate-x-2 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-slate-200/15 dark:border-slate-800/15 bg-slate-50 dark:bg-slate-950">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-8 py-12 max-w-7xl mx-auto gap-6">
+<div class="font-['Space_Grotesk'] uppercase tracking-widest text-xs text-slate-600 dark:text-slate-400">
+                © 2024 The Digital Curator. Built with technical precision and literary elegance.
+            </div>
+<div class="flex gap-8">
+<a class="font-['Space_Grotesk'] uppercase tracking-widest text-xs text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 underline underline-offset-4 transition-all" href="#">RSS Feed</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-widest text-xs text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 underline underline-offset-4 transition-all" href="#">Twitter</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-widest text-xs text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 underline underline-offset-4 transition-all" href="#">GitHub</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-widest text-xs text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 underline underline-offset-4 transition-all" href="#">Source</a>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hans"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>数字馆长 | 文章详情</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;family=Space+Grotesk:wght@300..700&amp;family=Noto+Serif+SC:wght@200..900&amp;family=Noto+Sans+SC:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed-dim": "#94f0df",
+                    "surface-variant": "#dde4e5",
+                    "on-primary-fixed": "#2c358e",
+                    "on-secondary": "#f2faff",
+                    "primary-fixed-dim": "#ced1ff",
+                    "inverse-surface": "#0c0f0f",
+                    "on-tertiary-fixed": "#005046",
+                    "on-surface": "#2d3435",
+                    "background": "#f9f9f9",
+                    "outline-variant": "#adb3b4",
+                    "on-primary-fixed-variant": "#4953ac",
+                    "surface-container": "#ebeeef",
+                    "on-secondary-fixed-variant": "#495f69",
+                    "surface-bright": "#f9f9f9",
+                    "tertiary-container": "#a2ffed",
+                    "on-error-container": "#752121",
+                    "surface": "#f9f9f9",
+                    "error": "#9f403d",
+                    "secondary-fixed": "#cfe6f2",
+                    "error-dim": "#4e0309",
+                    "primary-fixed": "#e0e0ff",
+                    "surface-container-low": "#f2f4f4",
+                    "tertiary": "#006b5f",
+                    "surface-dim": "#d4dbdd",
+                    "secondary-fixed-dim": "#c1d8e4",
+                    "on-surface-variant": "#5a6061",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#fff7f6",
+                    "on-secondary-container": "#40555f",
+                    "primary-container": "#e0e0ff",
+                    "on-tertiary-fixed-variant": "#006f62",
+                    "secondary-container": "#cfe6f2",
+                    "on-tertiary-container": "#006458",
+                    "tertiary-fixed": "#a2ffed",
+                    "secondary-dim": "#415660",
+                    "on-primary-container": "#3f48a1",
+                    "on-tertiary": "#e3fff7",
+                    "primary-dim": "#4049a2",
+                    "on-background": "#2d3435",
+                    "primary": "#4c56af",
+                    "inverse-on-surface": "#9c9d9d",
+                    "tertiary-dim": "#005e53",
+                    "surface-container-high": "#e4e9ea",
+                    "error-container": "#fe8983",
+                    "surface-container-highest": "#dde4e5",
+                    "inverse-primary": "#929bfa",
+                    "outline": "#757c7d",
+                    "on-secondary-fixed": "#2d424c",
+                    "on-primary": "#f9f6ff",
+                    "secondary": "#4d626c",
+                    "surface-tint": "#4c56af"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Serif SC", "Newsreader", "serif"],
+                    "body": ["Noto Sans SC", "Manrope", "sans-serif"],
+                    "label": ["Space Grotesk", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .prose-essay p {
+            margin-bottom: 2rem;
+            line-height: 2;
+            font-size: 1.125rem;
+            color: #2d3435;
+            letter-spacing: 0.01em;
+        }
+        .prose-essay .pull-quote {
+            margin-left: 0;
+            margin-top: 3.5rem;
+            margin-bottom: 3.5rem;
+            padding-left: 2rem;
+            border-left: 3px solid #4c56af;
+        }
+        @media (min-width: 768px) {
+            .prose-essay .pull-quote {
+                margin-left: 2rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl bg-gradient-to-b from-slate-100/5 to-transparent">
+<nav class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+<div class="text-2xl font-headline font-semibold text-slate-950 tracking-tight">
+                数字馆长
+            </div>
+<div class="hidden md:flex items-center gap-10">
+<a class="text-slate-500 hover:text-slate-800 transition-colors font-headline" href="#">首页</a>
+<a class="text-slate-950 border-b-2 border-slate-900 pb-1 font-headline" href="#">文章</a>
+<a class="text-slate-500 hover:text-slate-800 transition-colors font-headline" href="#">技术</a>
+<a class="text-slate-500 hover:text-slate-800 transition-colors font-headline" href="#">项目</a>
+<a class="text-slate-500 hover:text-slate-800 transition-colors font-headline" href="#">存档</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:opacity-80 transition-opacity duration-300">
+<span class="material-symbols-outlined text-slate-900" data-icon="dark_mode">dark_mode</span>
+</button>
+</div>
+</nav>
+</header>
+<main class="pt-32 pb-24">
+<!-- Essay Hero Section -->
+<article class="max-w-[720px] mx-auto px-6">
+<header class="mb-16">
+<div class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant mb-8 flex items-center gap-4">
+<span>2024年10月24日</span>
+<span class="w-8 h-[1px] bg-outline-variant/30"></span>
+<span>哲学与设计</span>
+</div>
+<h1 class="font-headline text-4xl md:text-6xl font-medium tracking-tight text-on-surface leading-[1.3] mb-10">
+                    无声的建筑师：论不可见细节的力量。
+                </h1>
+<p class="font-headline text-xl text-on-surface-variant leading-relaxed opacity-90">
+                    探讨那些最深远的结构性影响，往往是如何在我们的显性感知之外发挥作用的。
+                </p>
+</header>
+<!-- Featured Image -->
+<figure class="mb-16 -mx-6 md:-mx-24 overflow-hidden rounded-lg">
+<img class="w-full h-[500px] object-cover opacity-90 hover:opacity-100 transition-opacity duration-700" data-alt="Minimalist architectural detail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-oi8WqbYnseyq7Y5wa-Xbd-Md9vzpvII8nVXZLulA0Ct0DxLO7alsIbncnJcenYO3BHEDY7O2Z1U0B6t_FOXSXemjCPw5MlxyGms8St5fa_uwtr8G2-x7g55kzPhUQaHi8IgMhrjc-hqtRdjtX4uNxcwHoHKT0a4-4VIeteNeCo5yJIFEiz9gO_rUOtJ0zfMDhhWabfZPDieMKJR1kKJKt5jeYet2X2DxL34VG3sOTCck-OGKY8ldXeJV-pPDw8O2ySJGMXYPgzE"/>
+<figcaption class="font-label text-[10px] uppercase tracking-tighter text-on-surface-variant/60 mt-4 px-6 md:px-24">
+                    摄影：光影研究 第12号
+                </figcaption>
+</figure>
+<!-- Essay Content -->
+<section class="prose-essay">
+<p>
+                    在现代设计的词汇中，我们往往赞美可见之物。我们称赞车身的曲线、显示屏的色彩、或是机械开关清脆的触感。然而，一位策展者真正的功力，并不在于所呈现的内容，而在于支撑整个体验的结构性沉默。
+                </p>
+<p>
+                    思考我们所居住的空间——无论是数字的还是物理的。最舒适的房间往往不是最喧闹的。它们由一种特定的气压定义：天花板恰到好处的高度、墙壁微妙的纹理，或是窗户引导午后阳光射入的方式。
+                </p>
+<div class="pull-quote">
+<blockquote class="font-headline text-2xl md:text-3xl font-light text-primary leading-snug">
+                        复杂性是尚未找到中心的系统发出的噪音。真正的优雅是剥离多余，直到灵魂浮现。
+                    </blockquote>
+</div>
+<p>
+                    这种“无声建筑师”的哲学表明，我们的工作应当追求一种必然性。当用户与一项感觉如同本能般自然的技术精密产品互动时，并非因为设计简单，而是因为其复杂性已被紧密地折叠进结构之中，从而消失不见。
+                </p>
+<p>
+                    作为数字时代的馆长，我们必须抵制填满每一个空白的冲动。空白是读者呼吸的地方。页面上的留白并非内容的缺失，而是赋予文字权威感的框架。
+                </p>
+<div class="my-16 flex flex-col items-center">
+<div class="w-12 h-[1px] bg-primary/20 mb-2"></div>
+<div class="w-8 h-[1px] bg-primary/20"></div>
+</div>
+<p>
+                    综上所述，我们发现最持久的设计是那些作为人类意图的安静背景存在的设计。策展人的手应当是隐形的，仅通过观察者导航所获世界的清晰与轻松感而被察觉。
+                </p>
+</section>
+<!-- Author Bio -->
+<footer class="mt-24 pt-12 border-t border-outline-variant/10">
+<div class="flex items-center gap-6">
+<div class="w-16 h-16 rounded-full overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover grayscale" data-alt="Author headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0s2Krn23b_EyHmhl0Urp0UVS6aC52C_i9cThSOl0OQw_UYIvHKdwNjDQE13ZmUjVl6I1ScuDJBYQqdgShv4OCHyGtoA0Ndq5q_1aGetYtkTvmzhfF6LMCwursnPLdgkpriYL0JiPH5bd3qebF0tdjKuslbGK6uHoI8BGXHPo5u_hSyfiptD829zirGgUZ8Mmz9LGgzWD1zrz3os3UYo1Kxq3PfF555gAlb5wdB5vAWXnv8kcTqhIecEX5Iy0Qv-IKYl9pMlzBOak"/>
+</div>
+<div>
+<h4 class="font-headline text-lg font-medium">馆长</h4>
+<p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">档案保管员与数字哲学家</p>
+</div>
+</div>
+</footer>
+</article>
+<!-- Related Readings Section -->
+<section class="mt-32 py-24 bg-surface-container-low">
+<div class="max-w-[720px] mx-auto px-6">
+<h3 class="font-label text-xs uppercase tracking-[0.3em] text-on-surface-variant mb-12">延伸阅读</h3>
+<div class="space-y-16">
+<a class="group block" href="#">
+<span class="font-label text-[10px] uppercase text-primary mb-3 block tracking-widest">技术分析</span>
+<h4 class="font-headline text-2xl group-hover:text-primary transition-colors duration-300 mb-3">代码的几何学：在逻辑中寻找美感。</h4>
+<p class="font-body text-sm text-on-surface-variant line-clamp-2">函数式编程范式如何镜像文艺复兴时期的建筑原则。</p>
+</a>
+<a class="group block" href="#">
+<span class="font-label text-[10px] uppercase text-primary mb-3 block tracking-widest">案例研究</span>
+<h4 class="font-headline text-2xl group-hover:text-primary transition-colors duration-300 mb-3">无纸化办公：一场数字考古。</h4>
+<p class="font-body text-sm text-on-surface-variant line-clamp-2">重温1975年的预言，以及为什么我们依然渴望物理介质的触感。</p>
+</a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="w-full border-t border-slate-200/15 bg-slate-50">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-8 py-12 max-w-7xl mx-auto gap-8">
+<div class="font-label uppercase tracking-widest text-[10px] text-slate-600 text-center md:text-left leading-loose">
+                © 2024 数字馆长 (The Digital Curator). 以技术精度与文学优雅构建。
+            </div>
+<div class="flex gap-8">
+<a class="font-label uppercase tracking-widest text-[10px] text-slate-500 hover:text-slate-900 underline underline-offset-4 transition-colors" href="#">RSS 订阅</a>
+<a class="font-label uppercase tracking-widest text-[10px] text-slate-500 hover:text-slate-900 underline underline-offset-4 transition-colors" href="#">Twitter</a>
+<a class="font-label uppercase tracking-widest text-[10px] text-slate-500 hover:text-slate-900 underline underline-offset-4 transition-colors" href="#">GitHub</a>
+<a class="font-label uppercase tracking-widest text-[10px] text-slate-500 hover:text-slate-900 underline underline-offset-4 transition-colors" href="#">源代码</a>
+</div>
+</div>
+</footer>
+</body></html>

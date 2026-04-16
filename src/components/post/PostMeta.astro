@@ -1,0 +1,48 @@
+---
+import { formatDate, getReadingTime } from '@lib/posts';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const readingTime = getReadingTime(post.body);
+---
+
+<div class="post-meta">
+  <time class="post-date" datetime={post.data.date.toISOString()}>
+    {formatDate(post.data.date)}
+  </time>
+  <span class="post-separator">·</span>
+  <span class="post-reading-time">{readingTime} 分钟阅读</span>
+</div>
+
+<style>
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--on-surface-variant);
+  }
+
+  .post-date {
+    font-weight: 500;
+  }
+
+  .post-separator {
+    opacity: 0.5;
+  }
+
+  .post-reading-time {
+    opacity: 0.8;
+  }
+
+  @media (max-width: 768px) {
+    .post-meta {
+      font-size: 0.8125rem;
+    }
+  }
+</style>

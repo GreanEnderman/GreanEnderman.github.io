@@ -1,0 +1,240 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import PostMeta from '@components/post/PostMeta.astro';
+import TagList from '@components/post/TagList.astro';
+import PostNavigation from '@components/post/PostNavigation.astro';
+import RelatedPosts from '@components/post/RelatedPosts.astro';
+import { getAdjacentPosts, getRelatedPosts } from '@lib/posts';
+import type { CollectionEntry } from 'astro:content';
+import '@styles/prose.css';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+// 获取上下篇和相关文章
+const { prev, next } = await getAdjacentPosts(post.slug);
+const relatedPosts = await getRelatedPosts(post, 3);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article class="essay-article">
+    <div class="essay-container">
+      <!-- 文章头部 -->
+      <header class="essay-header">
+        <div class="essay-meta-top">
+          <PostMeta post={post} />
+        </div>
+
+        <h1 class="essay-title">{post.data.title}</h1>
+
+        {post.data.description && (
+          <p class="essay-lead">{post.data.description}</p>
+        )}
+      </header>
+
+      <!-- 文章正文 -->
+      <div class="prose prose-essay">
+        <Content />
+      </div>
+
+      <!-- 文章底部 -->
+      <footer class="essay-footer">
+        {post.data.tags.length > 0 && (
+          <div class="essay-tags">
+            <TagList tags={post.data.tags} />
+          </div>
+        )}
+
+        {post.data.updated && (
+          <p class="essay-updated">
+            最后更新于 {new Date(post.data.updated).toLocaleDateString('zh-CN', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </p>
+        )}
+      </footer>
+
+      <!-- 上下篇导航 -->
+      <PostNavigation prev={prev} next={next} />
+
+      <!-- 相关文章 -->
+      <RelatedPosts posts={relatedPosts} />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .essay-article {
+    padding-top: 8rem;
+    padding-bottom: 6rem;
+    background: var(--background);
+  }
+
+  .essay-container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* 文章头部 */
+  .essay-header {
+    margin-bottom: 4rem;
+    text-align: left;
+  }
+
+  .essay-meta-top {
+    margin-bottom: 2rem;
+    opacity: 0.7;
+  }
+
+  .essay-title {
+    font-family: var(--font-headline);
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--on-surface);
+    margin-bottom: 2rem;
+  }
+
+  .essay-lead {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    line-height: 1.5;
+    color: var(--on-surface-variant);
+    font-weight: 400;
+    font-style: italic;
+    margin-top: 2rem;
+    padding-left: 2rem;
+    border-left: 3px solid var(--primary);
+  }
+
+  /* 随笔特定样式 */
+  .prose-essay {
+    font-size: 1.125rem;
+    line-height: 1.8;
+  }
+
+  /* 首段特殊样式 */
+  .prose-essay :global(> p:first-of-type) {
+    font-size: 1.25rem;
+    line-height: 1.75;
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
+
+  /* 引用块样式 - 随笔风格 */
+  .prose-essay :global(blockquote) {
+    font-family: var(--font-headline);
+    font-size: 1.375rem;
+    line-height: 1.6;
+    font-style: normal;
+    margin: 3rem 0;
+    padding-left: 2.5rem;
+    border-left: 4px solid var(--primary);
+    color: var(--on-surface);
+  }
+
+  /* 段落间距更宽松 */
+  .prose-essay :global(p) {
+    margin-top: 1.75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  /* 标题样式 - 更柔和 */
+  .prose-essay :global(h2) {
+    font-family: var(--font-headline);
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top: 3.5rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .prose-essay :global(h3) {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  /* 分隔线 - 更明显 */
+  .prose-essay :global(hr) {
+    margin: 4rem auto;
+    width: 50%;
+    border: none;
+    border-top: 2px solid var(--outline-variant);
+    opacity: 0.3;
+  }
+
+  /* 文章底部 */
+  .essay-footer {
+    margin-top: 5rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--outline-variant);
+    opacity: 0.8;
+  }
+
+  .essay-tags {
+    margin-bottom: 2rem;
+  }
+
+  .essay-updated {
+    font-size: 0.875rem;
+    color: var(--on-surface-variant);
+    font-style: italic;
+    text-align: center;
+  }
+
+  /* 响应式 */
+  @media (max-width: 768px) {
+    .essay-article {
+      padding-top: 6rem;
+      padding-bottom: 4rem;
+    }
+
+    .essay-container {
+      padding: 0 1.5rem;
+    }
+
+    .essay-title {
+      font-size: 2.5rem;
+    }
+
+    .essay-lead {
+      font-size: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .prose-essay {
+      font-size: 1.0625rem;
+    }
+
+    .prose-essay :global(> p:first-of-type) {
+      font-size: 1.125rem;
+    }
+
+    .prose-essay :global(blockquote) {
+      font-size: 1.25rem;
+      padding-left: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .prose-essay :global(h2) {
+      font-size: 1.75rem;
+      margin-top: 2.5rem;
+    }
+
+    .prose-essay :global(h3) {
+      font-size: 1.375rem;
+      margin-top: 2rem;
+    }
+  }
+</style>
