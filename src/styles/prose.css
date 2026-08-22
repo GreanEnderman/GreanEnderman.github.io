@@ -162,6 +162,27 @@
   color: inherit;
 }
 
+/* Shiki dual themes follow the site's data-theme setting. */
+.prose pre.astro-code {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+
+.prose pre.astro-code span {
+  color: var(--shiki-light);
+  background-color: transparent;
+}
+
+[data-theme="dark"] .prose pre.astro-code {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
+}
+
+[data-theme="dark"] .prose pre.astro-code span {
+  color: var(--shiki-dark);
+  background-color: transparent;
+}
+
 /* 水平分隔线 */
 .prose hr {
   margin-top: 3rem;

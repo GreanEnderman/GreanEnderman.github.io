@@ -18,9 +18,9 @@ export interface SEOMetadata {
  * 站点基础配置
  */
 export const SITE_CONFIG = {
-  title: '数字馆长',
-  description: '代码与匠心的交汇处，技术思考与文学感悟的策展',
-  author: '数字馆长',
+  title: '霜筠 · 筠隅',
+  description: '记录技术、项目与偶有所思。于方寸之间求知，也在文字之中自得。',
+  author: '霜筠',
   siteUrl: 'https://yourusername.github.io', // 需要替换为实际域名
   defaultOgImage: '/images/og-default.jpg',
   locale: 'zh-CN',

@@ -1,0 +1,68 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Comments from '@components/site/Comments.astro';
+---
+
+<BaseLayout title="留言" description="在这里分享想法、建议，或只是打个招呼。">
+  <main class="guestbook">
+    <div class="guestbook-container">
+      <header class="guestbook-header">
+        <p class="guestbook-kicker">GUESTBOOK</p>
+        <h1>留下一点声音</h1>
+        <p>
+          欢迎分享阅读感受、建议，或只是来打个招呼。留言由 GitHub Discussions
+          承载，发布前需要登录 GitHub。
+        </p>
+      </header>
+
+      <Comments title="站点留言" description="请保持友善、具体，也请避免公开个人敏感信息。" />
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .guestbook {
+    min-height: 70vh;
+    padding: 9rem 1.5rem 6rem;
+    background: var(--background);
+  }
+
+  .guestbook-container {
+    width: min(100%, 48rem);
+    margin-inline: auto;
+  }
+
+  .guestbook-header {
+    max-width: 42rem;
+  }
+
+  .guestbook-kicker {
+    margin-bottom: 1rem;
+    color: var(--primary);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+  }
+
+  h1 {
+    margin-bottom: 1.5rem;
+    color: var(--on-surface);
+    font-family: var(--font-headline);
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    letter-spacing: -0.035em;
+  }
+
+  .guestbook-header > p:last-child {
+    color: var(--on-surface-variant);
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    line-height: 1.9;
+  }
+
+  @media (max-width: 640px) {
+    .guestbook {
+      padding-top: 7rem;
+      padding-inline: 1.25rem;
+    }
+  }
+</style>

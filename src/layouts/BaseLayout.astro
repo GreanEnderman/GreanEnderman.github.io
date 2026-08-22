@@ -1,6 +1,7 @@
 ---
 import SiteHeader from '@components/site/SiteHeader.astro';
 import SiteFooter from '@components/site/SiteFooter.astro';
+import { SITE_CONFIG } from '@lib/seo';
 import '@styles/tokens.css';
 import '@styles/global.css';
 
@@ -9,7 +10,10 @@ interface Props {
   description?: string;
 }
 
-const { title = '数字馆长 | 代码与匠心', description = '一份关于技术思考与文学感悟的策展' } = Astro.props;
+const { title = SITE_CONFIG.title, description = SITE_CONFIG.description } = Astro.props;
+const documentTitle = title === SITE_CONFIG.title
+  ? SITE_CONFIG.title
+  : `${title} | ${SITE_CONFIG.title}`;
 ---
 
 <!DOCTYPE html>
@@ -17,13 +21,13 @@ const { title = '数字馆长 | 代码与匠心', description = '一份关于技
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>{title}</title>
+  <title>{documentTitle}</title>
   <meta name="description" content={description} />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="icon" type="image/png" href="/favicon.png" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="64x64" href="/images/brand/favicon_source_64.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/brand/apple-touch-icon.png" />
 
   <!-- Material Symbols -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>

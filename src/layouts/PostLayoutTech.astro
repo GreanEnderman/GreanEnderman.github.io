@@ -5,6 +5,8 @@ import PostTOC from '@components/post/PostTOC.astro';
 import TagList from '@components/post/TagList.astro';
 import PostNavigation from '@components/post/PostNavigation.astro';
 import RelatedPosts from '@components/post/RelatedPosts.astro';
+import PostQuickNav from '@components/post/PostQuickNav.astro';
+import Comments from '@components/site/Comments.astro';
 import { getAdjacentPosts, getRelatedPosts } from '@lib/posts';
 import type { CollectionEntry } from 'astro:content';
 import '@styles/prose.css';
@@ -15,6 +17,7 @@ interface Props {
 
 const { post } = Astro.props;
 const { Content, headings } = await post.render();
+const hasTOC = post.data.toc && headings.length > 0;
 
 // 获取上下篇和相关文章
 const { prev, next } = await getAdjacentPosts(post.slug);
@@ -22,10 +25,23 @@ const relatedPosts = await getRelatedPosts(post, 3);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <article class="tech-article">
+  {hasTOC && (
+    <script is:inline>
+      try {
+        if (window.localStorage.getItem('blog:tech-toc-collapsed') === 'true') {
+          document.documentElement.dataset.tocCollapsed = 'true';
+        } else {
+          delete document.documentElement.dataset.tocCollapsed;
+        }
+      } catch {
+        // Storage may be unavailable; keep the default expanded state.
+      }
+    </script>
+  )}
+  <article id="article-start" class="tech-article">
     <div class="article-container">
       <!-- 侧边栏：目录 -->
-      {post.data.toc && headings.length > 0 && (
+      {hasTOC && (
         <aside class="toc-sidebar">
           <PostTOC headings={headings} />
         </aside>
@@ -65,14 +81,19 @@ const relatedPosts = await getRelatedPosts(post, 3);
           )}
         </footer>
 
+        <div id="article-end" class="article-end-anchor" aria-hidden="true"></div>
+
         <!-- 上下篇导航 -->
         <PostNavigation prev={prev} next={next} />
 
         <!-- 相关文章 -->
         <RelatedPosts posts={relatedPosts} />
+
+        <Comments title="参与讨论" />
       </div>
     </div>
   </article>
+  <PostQuickNav />
 </BaseLayout>
 
 <style>
@@ -82,27 +103,37 @@ const relatedPosts = await getRelatedPosts(post, 3);
     background: var(--background);
   }
 
+  .article-end-anchor {
+    scroll-margin-top: 7rem;
+  }
+
   .article-container {
-    max-width: 1400px;
+    width: min(100%, 96rem);
     margin: 0 auto;
-    padding: 0 2rem;
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: 4rem;
-    align-items: start;
+    padding-inline: clamp(1.5rem, 3vw, 3rem);
   }
 
   /* 目录侧边栏 */
   .toc-sidebar {
-    position: sticky;
+    --tech-toc-card-width: clamp(17rem, 22vw, 21rem);
+
+    position: fixed;
     top: 8rem;
-    max-height: calc(100vh - 10rem);
-    overflow-y: auto;
+    left: max(
+      0.75rem,
+      calc(50vw - 48ch - var(--tech-toc-card-width) - clamp(1.5rem, 3vw, 3rem))
+    );
+    z-index: 30;
+    width: var(--tech-toc-card-width);
+    min-width: 0;
   }
 
   /* 主内容区 */
   .article-main {
-    max-width: 800px;
+    min-width: 0;
+    width: 100%;
+    max-width: 96ch;
+    margin-inline: auto;
   }
 
   /* 文章头部 */
@@ -147,7 +178,13 @@ const relatedPosts = await getRelatedPosts(post, 3);
 
   /* 技术文章特定样式 */
   .prose-tech {
+    max-width: 96ch;
     /* 代码块强调 */
+  }
+
+  .prose-tech :global(h2[id]),
+  .prose-tech :global(h3[id]) {
+    scroll-margin-top: 7rem;
   }
 
   .prose-tech :global(pre) {
@@ -174,11 +211,6 @@ const relatedPosts = await getRelatedPosts(post, 3);
 
   /* 响应式 */
   @media (max-width: 1024px) {
-    .article-container {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
     .toc-sidebar {
       display: none;
     }
@@ -190,7 +222,7 @@ const relatedPosts = await getRelatedPosts(post, 3);
     }
 
     .article-container {
-      padding: 0 1.5rem;
+      padding-inline: 1.5rem;
     }
 
     .article-title {

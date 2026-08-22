@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "posts/essays/new-article.md",
+                "file": "projects/new-article.md",
                 "mode": "source",
                 "source": false
               },
@@ -41,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
@@ -53,7 +55,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:标签1",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -183,11 +185,15 @@
       "bases:新建数据库": false
     }
   },
-  "active": "a0c71a5718a24729",
+  "active": "0e3526e056b225e7",
   "lastOpenFiles": [
+    "posts/tech/resource-TensorRT-Model-Connect.md",
+    "projects/blog-redesign.md",
     "projects/new-article.md",
+    "posts/essays/new-article.md",
+    "posts/tech/从 TensorRT Model Connect 学习 Agentic Workflow：一个工程化 Agent 项目的构建方法.md",
+    "2026-08-19.md",
     "posts/essays/ai-employee-design.md",
-    "posts/tech/new-article.md",
     "config.ts",
     "posts/essays/in-praise-of-slow-tools.md",
     "posts/essays/digital-gardening-philosophy.md"

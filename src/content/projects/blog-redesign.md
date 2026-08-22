@@ -1,11 +1,17 @@
 ---
-title: "个人博客系统重构"
-description: "从 WordPress 迁移到 Astro，打造以内容为中心的个人数字刊物。"
+title: 个人博客系统重构
+description: 从 WordPress 迁移到 Astro，打造以内容为中心的个人数字刊物。
 date: 2024-03-10
-status: "completed"
-stack: ["Astro", "TypeScript", "CSS", "Markdown"]
-featured: false
-relatedPosts: ["astro-performance-optimization", "css-grid-vs-flexbox"]
+status: completed
+stack:
+  - Astro
+  - TypeScript
+  - CSS
+  - Markdown
+featured: true
+relatedPosts:
+  - astro-performance-optimization
+  - css-grid-vs-flexbox
 ---
 
 ## 项目动机

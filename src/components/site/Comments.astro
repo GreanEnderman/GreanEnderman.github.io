@@ -1,0 +1,145 @@
+---
+import { GISCUS_CONFIG, isGiscusConfigured } from '@lib/comments';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = '评论',
+  description = '使用 GitHub 账号参与讨论。',
+} = Astro.props;
+---
+
+<section id="comments" class="comments" aria-labelledby="comments-title">
+  <header class="comments-header">
+    <p class="comments-kicker">DISCUSSION</p>
+    <h2 id="comments-title">{title}</h2>
+    <p>{description}</p>
+  </header>
+
+  {isGiscusConfigured ? (
+    <div
+      class="giscus-container"
+      data-repo={GISCUS_CONFIG.repo}
+      data-repo-id={GISCUS_CONFIG.repoId}
+      data-category={GISCUS_CONFIG.category}
+      data-category-id={GISCUS_CONFIG.categoryId}
+    >
+      <p class="comments-fallback" data-giscus-fallback>
+        评论区正在加载。若长时间没有显示，请检查网络或浏览器的内容拦截设置。
+      </p>
+    </div>
+  ) : (
+    <p class="comments-notice" role="status">
+      评论区尚未完成 GitHub Discussions 配置。站点管理员需要在
+      <code>src/lib/comments.ts</code> 中填写 Giscus 的 <code>repoId</code> 和
+      <code>categoryId</code>。
+    </p>
+  )}
+</section>
+
+{isGiscusConfigured && (
+  <script>
+    const container = document.querySelector<HTMLElement>('.giscus-container');
+
+    if (container) {
+      const fallback = container.querySelector<HTMLElement>('[data-giscus-fallback]');
+      const observer = new MutationObserver(() => {
+        if (container.querySelector('iframe.giscus-frame')) {
+          fallback?.setAttribute('hidden', '');
+          observer.disconnect();
+        }
+      });
+
+      observer.observe(container, { childList: true });
+
+      const theme = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+      const script = document.createElement('script');
+      script.src = 'https://giscus.app/client.js';
+      script.async = true;
+      script.crossOrigin = 'anonymous';
+      script.setAttribute('data-repo', container.dataset.repo ?? '');
+      script.setAttribute('data-repo-id', container.dataset.repoId ?? '');
+      script.setAttribute('data-category', container.dataset.category ?? '');
+      script.setAttribute('data-category-id', container.dataset.categoryId ?? '');
+      script.setAttribute('data-mapping', 'pathname');
+      script.setAttribute('data-strict', '1');
+      script.setAttribute('data-reactions-enabled', '1');
+      script.setAttribute('data-emit-metadata', '0');
+      script.setAttribute('data-input-position', 'top');
+      script.setAttribute('data-theme', theme);
+      script.setAttribute('data-lang', 'zh-CN');
+      script.setAttribute('data-loading', 'lazy');
+      container.append(script);
+    }
+
+    window.addEventListener('themechange', (event) => {
+      const theme = (event as CustomEvent<{ theme: 'light' | 'dark' }>).detail?.theme;
+      const iframe = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
+
+      if (!theme || !iframe?.contentWindow) return;
+
+      iframe.contentWindow.postMessage(
+        { giscus: { setConfig: { theme } } },
+        'https://giscus.app'
+      );
+    });
+  </script>
+)}
+
+<style>
+  .comments {
+    scroll-margin-top: 7rem;
+    margin-top: clamp(4rem, 8vw, 6rem);
+    padding-top: clamp(2rem, 5vw, 3rem);
+    border-top: 1px solid color-mix(in srgb, var(--outline-variant) 45%, transparent);
+  }
+
+  .comments-header {
+    margin-bottom: 2rem;
+  }
+
+  .comments-kicker {
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+  }
+
+  h2 {
+    margin-bottom: 0.75rem;
+    color: var(--on-surface);
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    line-height: 1.25;
+  }
+
+  .comments-header > p:last-child,
+  .comments-fallback,
+  .comments-notice {
+    color: var(--on-surface-variant);
+    font-size: 0.95rem;
+  }
+
+  .giscus-container {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .comments-fallback,
+  .comments-notice {
+    padding: 1rem 1.25rem;
+    background: var(--surface-container-low);
+    outline: 1px solid color-mix(in srgb, var(--outline-variant) 30%, transparent);
+    border-radius: 0.25rem;
+  }
+
+  .comments-notice code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+</style>

@@ -8,8 +8,12 @@ dist/
 # 环境变量
 .env
 .env.production
+.env.*
+!.env.example
+!.env.template
 
 # 日志
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -21,11 +25,16 @@ lerna-debug.log*
 !.vscode/extensions.json
 .idea
 .DS_Store
+Desktop.ini
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Obsidian 本地工作区状态
+**/.obsidian/workspace.json
+**/.obsidian/workspace-mobile.json
 
 # 系统文件
 Thumbs.db
@@ -33,4 +42,9 @@ Thumbs.db
 # 临时文件
 *.tmp
 *.temp
+*.tsbuildinfo
 .cache/
+
+# 本地设计源文件与交付压缩包
+logo_assets/
+*.zip

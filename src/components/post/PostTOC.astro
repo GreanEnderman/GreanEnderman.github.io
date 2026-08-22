@@ -12,25 +12,196 @@ const tocHeadings = headings.filter(h => h.depth <= 3);
 ---
 
 {tocHeadings.length > 0 && (
-  <nav class="toc" aria-label="目录">
-    <h2 class="toc-title">目录</h2>
-    <ul class="toc-list">
-      {tocHeadings.map((heading) => (
-        <li class={`toc-item toc-depth-${heading.depth}`}>
-          <a href={`#${heading.slug}`} class="toc-link">
-            {heading.text}
-          </a>
-        </li>
-      ))}
-    </ul>
-  </nav>
+  <div class="toc-shell">
+    <nav id="tech-post-toc" class="toc" aria-label="目录">
+      <div class="toc-heading">
+        <h2 class="toc-title">目录</h2>
+        <button
+          type="button"
+          class="toc-toggle toc-collapse"
+          aria-label="收起目录"
+          aria-controls="tech-post-toc"
+          aria-expanded="true"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+        </button>
+      </div>
+      <ul class="toc-list">
+        {tocHeadings.map((heading) => (
+          <li class={`toc-item toc-depth-${heading.depth}`}>
+            <a href={`#${heading.slug}`} class="toc-link">
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <button
+      type="button"
+      class="toc-toggle toc-expand"
+      aria-label="展开目录"
+      aria-controls="tech-post-toc"
+      aria-expanded="false"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+    </button>
+  </div>
 )}
 
 <style>
+  .toc-shell {
+    width: 100%;
+  }
+
   .toc {
     padding: 1.5rem;
     background-color: var(--surface-container-low);
     border-radius: 0.5rem;
+    max-height: calc(100vh - 10rem);
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    outline: 1px solid color-mix(in srgb, var(--outline-variant) 35%, transparent);
+    outline-offset: -1px;
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+    transform-origin: left top;
+    will-change: opacity, transform;
+    transition:
+      opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear;
+  }
+
+  :global(html[data-toc-collapsed='true']) .toc {
+    opacity: 0;
+    transform: translate3d(-1.25rem, -0.75rem, 0);
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 0.26s ease,
+      transform 0.28s cubic-bezier(0.4, 0, 1, 1),
+      visibility 0s linear 0.28s;
+  }
+
+  .toc-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .toc-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    color: var(--on-surface-variant);
+    background-color: color-mix(in srgb, var(--surface-container-highest) 62%, transparent);
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease, transform 0.3s ease;
+  }
+
+  .toc-toggle:hover {
+    color: var(--primary);
+    background-color: var(--surface-container-highest);
+  }
+
+  .toc-toggle:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  .toc-toggle .material-symbols-outlined {
+    font-size: 1.125rem;
+  }
+
+  .toc-expand {
+    position: fixed;
+    top: 8rem;
+    left: clamp(0.75rem, 2vw, 1.5rem);
+    z-index: 40;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate3d(-0.75rem, -0.25rem, 0);
+    background-color: color-mix(in srgb, var(--surface-container-low) 88%, transparent);
+    outline: 1px solid color-mix(in srgb, var(--outline-variant) 35%, transparent);
+    backdrop-filter: blur(0.5rem);
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease,
+      opacity 0.2s ease,
+      transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear 0.24s;
+  }
+
+  :global(html[data-toc-collapsed='true']) .toc-expand {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate3d(0, 0, 0);
+    transition-delay: 0.08s, 0.08s, 0.08s, 0.08s, 0s;
+  }
+
+  .toc:hover,
+  .toc:focus-within {
+    scrollbar-color: color-mix(in srgb, var(--outline) 42%, transparent) transparent;
+  }
+
+  .toc::-webkit-scrollbar {
+    width: 0.625rem;
+  }
+
+  .toc::-webkit-scrollbar-button,
+  .toc::-webkit-scrollbar-button:single-button,
+  .toc::-webkit-scrollbar-button:single-button:vertical:decrement,
+  .toc::-webkit-scrollbar-button:single-button:vertical:increment {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+    width: 0;
+    height: 0;
+    min-width: 0;
+    min-height: 0;
+    background: transparent;
+    background-image: none;
+    border: 0;
+  }
+
+  .toc::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 999px;
+  }
+
+  .toc:hover::-webkit-scrollbar-track,
+  .toc:focus-within::-webkit-scrollbar-track {
+    background-color: color-mix(in srgb, var(--surface-container-highest) 18%, transparent);
+  }
+
+  .toc::-webkit-scrollbar-thumb {
+    min-height: 2.5rem;
+    background-color: transparent;
+    background-clip: content-box;
+    border: 0.1875rem solid transparent;
+    border-radius: 999px;
+    transition: background-color 0.2s ease;
+  }
+
+  .toc:hover::-webkit-scrollbar-thumb,
+  .toc:focus-within::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--outline) 42%, transparent);
+  }
+
+  .toc::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in srgb, var(--on-surface-variant) 68%, transparent);
   }
 
   .toc-title {
@@ -39,7 +210,7 @@ const tocHeadings = headings.filter(h => h.depth <= 3);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--on-surface-variant);
-    margin-bottom: 1rem;
+    margin: 0;
     font-weight: 600;
   }
 
@@ -83,9 +254,71 @@ const tocHeadings = headings.filter(h => h.depth <= 3);
     background-color: var(--surface-container-highest);
     font-weight: 500;
   }
+
+  @media (max-width: 1024px) {
+    .toc-toggle {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toc,
+    .toc-toggle {
+      transition: none;
+    }
+
+  }
 </style>
 
 <script>
+  function initTOCCollapse() {
+    const tocShell = document.querySelector<HTMLElement>('.toc-shell');
+    const toc = document.getElementById('tech-post-toc');
+    const collapseButton = tocShell?.querySelector<HTMLButtonElement>('.toc-collapse');
+    const expandButton = tocShell?.querySelector<HTMLButtonElement>('.toc-expand');
+
+    if (!tocShell || !toc || !collapseButton || !expandButton) {
+      return;
+    }
+
+    type TOCShell = HTMLElement & { tocCollapseController?: AbortController };
+    const managedShell = tocShell as TOCShell;
+    managedShell.tocCollapseController?.abort();
+    const controller = new AbortController();
+    managedShell.tocCollapseController = controller;
+    const { signal } = controller;
+    const setCollapsed = (collapsed: boolean, persist = true) => {
+      if (collapsed) {
+        document.documentElement.dataset.tocCollapsed = 'true';
+      } else {
+        delete document.documentElement.dataset.tocCollapsed;
+      }
+
+      const expanded = String(!collapsed);
+      toc.setAttribute('aria-hidden', String(collapsed));
+      collapseButton.setAttribute('aria-expanded', expanded);
+      expandButton.setAttribute('aria-expanded', expanded);
+
+      if (persist) {
+        try {
+          window.localStorage.setItem('blog:tech-toc-collapsed', String(collapsed));
+        } catch {
+          // Keep the interaction working when storage is unavailable.
+        }
+      }
+    };
+
+    setCollapsed(document.documentElement.dataset.tocCollapsed === 'true', false);
+    collapseButton.addEventListener('click', () => {
+      setCollapsed(true);
+      expandButton.focus();
+    }, { signal });
+    expandButton.addEventListener('click', () => {
+      setCollapsed(false);
+      collapseButton.focus();
+    }, { signal });
+  }
+
   // 目录高亮逻辑
   function initTOC() {
     const tocLinks = document.querySelectorAll('.toc-link');
@@ -117,7 +350,13 @@ const tocHeadings = headings.filter(h => h.depth <= 3);
   }
 
   // 页面加载时初始化
-  document.addEventListener('DOMContentLoaded', initTOC);
+  document.addEventListener('DOMContentLoaded', () => {
+    initTOCCollapse();
+    initTOC();
+  });
   // Astro 页面切换时重新初始化
-  document.addEventListener('astro:page-load', initTOC);
+  document.addEventListener('astro:page-load', () => {
+    initTOCCollapse();
+    initTOC();
+  });
 </script>

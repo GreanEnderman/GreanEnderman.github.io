@@ -1,13 +1,16 @@
 ---
-title: "项目名称"
-description: "项目简介，一句话说明项目是什么"
+title: 项目名称
+description: 项目简介，一句话说明项目是什么
 date: 2026-04-16
-status: "in-progress"  # in-progress | completed | archived
-stack: ["技术1", "技术2", "技术3"]
-featured: false
-repo: "https://github.com/username/repo"
-demo: "https://demo.example.com"
-relatedPosts: []  # 关联文章的 slug，如 ["astro-performance-optimization"]
+status: in-progress
+stack:
+  - 技术1
+  - 技术2
+  - 技术3
+featured: true
+repo: https://github.com/username/repo
+demo: https://demo.example.com
+relatedPosts: []
 ---
 
 ## 项目背景

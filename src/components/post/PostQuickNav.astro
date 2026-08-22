@@ -1,0 +1,120 @@
+<nav class="post-quick-nav" aria-label="文章快速导航">
+  <button type="button" data-scroll-target="article-start" aria-label="回到文章顶部" title="回到顶部">
+    <span class="material-symbols-outlined" aria-hidden="true">vertical_align_top</span>
+  </button>
+  <button type="button" data-scroll-target="article-end" aria-label="前往文章末尾" title="文章末尾">
+    <span class="material-symbols-outlined" aria-hidden="true">vertical_align_bottom</span>
+  </button>
+  <button type="button" data-scroll-target="comments" aria-label="前往文章评论" title="文章评论">
+    <span class="material-symbols-outlined" aria-hidden="true">forum</span>
+  </button>
+</nav>
+
+<script>
+  const quickNav = document.querySelector('.post-quick-nav');
+  let scrollAnimationFrame: number | undefined;
+
+  const animateScrollTo = (target: HTMLElement) => {
+    if (scrollAnimationFrame) {
+      window.cancelAnimationFrame(scrollAnimationFrame);
+    }
+
+    const startY = window.scrollY;
+    const headerOffset = 112;
+    const targetY = Math.min(
+      Math.max(0, target.getBoundingClientRect().top + startY - headerOffset),
+      document.documentElement.scrollHeight - window.innerHeight
+    );
+    const distance = targetY - startY;
+
+    if (Math.abs(distance) < 2) return;
+
+    const duration = Math.min(1200, Math.max(500, Math.abs(distance) * 0.28));
+    const startTime = performance.now();
+    const easeInOutCubic = (progress: number) => (
+      progress < 0.5
+        ? 4 * progress ** 3
+        : 1 - ((-2 * progress + 2) ** 3) / 2
+    );
+
+    const step = (currentTime: number) => {
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      window.scrollTo(0, startY + distance * easeInOutCubic(progress));
+
+      if (progress < 1) {
+        scrollAnimationFrame = window.requestAnimationFrame(step);
+      } else {
+        scrollAnimationFrame = undefined;
+      }
+    };
+
+    scrollAnimationFrame = window.requestAnimationFrame(step);
+  };
+
+  quickNav?.querySelectorAll<HTMLButtonElement>('[data-scroll-target]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const targetId = button.dataset.scrollTarget;
+      const target = targetId ? document.getElementById(targetId) : null;
+
+      if (target) animateScrollTo(target);
+    });
+  });
+</script>
+
+<style>
+  .post-quick-nav {
+    position: fixed;
+    right: clamp(0.75rem, 2vw, 1.5rem);
+    bottom: clamp(1rem, 3vw, 2rem);
+    z-index: 35;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: color-mix(in srgb, var(--surface-container-lowest) 88%, transparent);
+    outline: 1px solid color-mix(in srgb, var(--outline-variant) 38%, transparent);
+    border-radius: 0.5rem;
+    backdrop-filter: blur(14px);
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0.5rem;
+    border: 0;
+    border-radius: 0.25rem;
+    background: transparent;
+    color: var(--on-surface-variant);
+    font: inherit;
+    cursor: pointer;
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+
+  button:hover,
+  button:focus-visible {
+    background: var(--surface-container);
+    color: var(--primary);
+  }
+
+  button:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  .material-symbols-outlined {
+    font-size: 1.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .post-quick-nav {
+      right: 0.75rem;
+      bottom: 0.75rem;
+      flex-direction: row;
+    }
+
+  }
+
+</style>

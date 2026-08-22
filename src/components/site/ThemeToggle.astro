@@ -36,14 +36,18 @@
   const handleToggleClick = () => {
     const element = document.documentElement;
     const isDark = element.getAttribute('data-theme') === 'dark';
+    const nextTheme = isDark ? 'light' : 'dark';
 
     if (isDark) {
       element.removeAttribute('data-theme');
-      localStorage.setItem('theme', 'light');
     } else {
       element.setAttribute('data-theme', 'dark');
-      localStorage.setItem('theme', 'dark');
     }
+
+    localStorage.setItem('theme', nextTheme);
+    window.dispatchEvent(new CustomEvent('themechange', {
+      detail: { theme: nextTheme }
+    }));
   };
 
   document.getElementById('theme-toggle')?.addEventListener('click', handleToggleClick);

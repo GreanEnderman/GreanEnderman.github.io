@@ -17,7 +17,7 @@ const posts = await getPostsByTag(tag);
 const relatedTags = await getRelatedTags(tag, 5);
 ---
 
-<BaseLayout title={`标签：${tag} | 数字馆长`}>
+<BaseLayout title={`标签：${tag}`}>
   <main class="pt-32 pb-24 px-6 max-w-7xl mx-auto">
     <!-- Header -->
     <header class="mb-16 md:mb-24 border-b border-[var(--outline-variant)] border-opacity-30 pb-12">

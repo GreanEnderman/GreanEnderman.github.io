@@ -1,11 +1,14 @@
 ---
-title: "随笔标题"
-description: "随笔摘要，简短描述主题"
+title: 随笔标题
+description: 随笔摘要，简短描述主题
 date: 2026-04-16
-category: "essay"
-template: "essay"
-tags: ["思考", "生活", "创作"]
-featured: false
+category: essay
+template: essay
+tags:
+  - 思考
+  - 生活
+  - 创作
+featured: true
 toc: false
 draft: false
 ---

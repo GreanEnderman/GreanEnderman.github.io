@@ -1,34 +1,37 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import FeaturedCarousel from '@components/site/FeaturedCarousel.astro';
 import { getFeaturedPosts, getRecentPosts, getPostsByCategory, formatDate } from '@lib/posts';
 import { getFeaturedProjects } from '@lib/projects';
 
 // 获取数据
-const featuredPosts = await getFeaturedPosts(1);
-const featuredPost = featuredPosts.length > 0 ? featuredPosts[0] : (await getRecentPosts(1))[0];
-
-const featuredProjects = await getFeaturedProjects(1);
-const featuredProject = featuredProjects.length > 0 ? featuredProjects[0] : null;
+const selectedFeaturedPosts = await getFeaturedPosts(5);
+const featuredPosts = selectedFeaturedPosts.length > 0
+  ? selectedFeaturedPosts
+  : await getRecentPosts(1);
+const featuredProjects = await getFeaturedProjects(5);
 
 const techPosts = (await getPostsByCategory('tech')).slice(0, 3);
 const essayPosts = (await getPostsByCategory('essay')).slice(0, 3);
 const recentUpdates = await getRecentPosts(3);
 ---
 
-<BaseLayout title="数字馆长 | 代码与匠心">
+<BaseLayout>
   <main class="pt-32 pb-24">
     <!-- Hero Section: Site Manifesto -->
     <section class="max-w-7xl mx-auto px-6 mb-32">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
         <div class="lg:col-span-8">
-          <span class="mono-label text-xs uppercase tracking-widest text-on-surface-variant mb-6 block">站点宣言</span>
+          <span class="mono-label text-xs uppercase tracking-widest text-on-surface-variant mb-6 block">霜筠小记</span>
           <h1 class="font-headline text-5xl md:text-7xl leading-tight tracking-tight">
-            在 <span class="text-primary">代码</span> 与 <span class="text-secondary">匠心</span> 的交汇处探索。
+            <span class="block">于 <span class="text-primary">代码</span> 与 文字 之间，</span>
+            <span class="block">留一隅 <span class="clean-bamboo">清筠</span></span>
           </h1>
         </div>
         <div class="lg:col-span-4 pb-2">
           <p class="text-lg text-on-surface-variant font-body leading-relaxed max-w-sm">
-            一份关于技术思考与文学感悟的策展。以装帧师的灵魂，打造数字时代的器物。
+            记录技术、项目与偶有所思。<br />
+            于方寸之间求知，也在文字之中自得。
           </p>
         </div>
       </div>
@@ -36,50 +39,13 @@ const recentUpdates = await getRecentPosts(3);
 
     <!-- Featured Section (Asymmetric Bento) -->
     <section class="max-w-7xl mx-auto px-6 mb-32">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Main Featured Essay -->
-        {featuredPost && (
-          <div class="lg:col-span-2 group">
-            <a href={`/posts/${featuredPost.slug}/`} class="block bg-[var(--surface-container-low)] overflow-hidden transition-colors duration-500 hover:bg-[var(--surface-container-high)] h-full flex flex-col">
-              {featuredPost.data.cover && (
-                <div class="aspect-video overflow-hidden">
-                  <img alt={featuredPost.data.title} class="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105" src={featuredPost.data.cover}/>
-                </div>
-              )}
-              <div class="p-10 flex flex-col flex-grow">
-                <div class="flex justify-between items-start mb-6">
-                  <span class="mono-label text-xs tracking-widest text-primary font-bold">精选文章</span>
-                  <span class="mono-label text-xs text-on-surface-variant">{formatDate(featuredPost.data.date)}</span>
-                </div>
-                <h2 class="font-headline text-3xl mb-6 leading-snug">{featuredPost.data.title}</h2>
-                <p class="font-body text-on-surface-variant mb-8 line-clamp-3">{featuredPost.data.description}</p>
-                <div class="mt-auto">
-                  <span class="inline-flex items-center gap-2 font-label text-xs uppercase tracking-widest border-b border-primary pb-1">阅读全文</span>
-                </div>
-              </div>
-            </a>
-          </div>
-        )}
-
-        <!-- Featured Project -->
-        {featuredProject && (
-          <div class="group">
-            <a href={`/projects/${featuredProject.slug}/`} class="block bg-[var(--surface-container-highest)] h-full p-10 flex flex-col">
-              <span class="mono-label text-xs tracking-widest text-secondary font-bold mb-8">最新项目</span>
-              {featuredProject.data.cover && (
-                <div class="mb-10 aspect-square bg-white shadow-sm flex items-center justify-center p-8 overflow-hidden">
-                  <img alt={featuredProject.data.title} class="w-full h-full object-contain mix-blend-multiply opacity-80" src={featuredProject.data.cover}/>
-                </div>
-              )}
-              <h3 class="font-headline text-2xl mb-4">{featuredProject.data.title}</h3>
-              <p class="font-body text-sm text-on-surface-variant mb-8">{featuredProject.data.description}</p>
-              <div class="mt-auto flex flex-wrap gap-2 mb-8">
-                {featuredProject.data.stack.slice(0, 2).map((tech) => (
-                  <span class="bg-secondary-container text-on-secondary-container px-3 py-1 text-[10px] mono-label rounded-full uppercase">{tech}</span>
-                ))}
-              </div>
-              <span class="material-symbols-outlined text-4xl text-primary" data-icon="arrow_outward">arrow_outward</span>
-            </a>
+      <div class:list={['featured-grid', { 'featured-grid--article-only': featuredProjects.length === 0 }]}>
+        <div class="featured-grid__posts">
+          <FeaturedCarousel kind="post" items={featuredPosts} interval={7000} />
+        </div>
+        {featuredProjects.length > 0 && (
+          <div class="featured-grid__projects">
+            <FeaturedCarousel kind="project" items={featuredProjects} interval={9000} />
           </div>
         )}
       </div>
@@ -154,3 +120,35 @@ const recentUpdates = await getRecentPosts(3);
     </section>
   </main>
 </BaseLayout>
+
+<style>
+  .featured-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(15rem, 1fr);
+    align-items: stretch;
+    gap: 2rem;
+  }
+
+  .featured-grid--article-only {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .featured-grid__posts,
+  .featured-grid__projects {
+    min-width: 0;
+  }
+
+  .clean-bamboo {
+    color: var(--secondary);
+    background: linear-gradient(135deg, var(--secondary), var(--tertiary));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  @media (max-width: 720px) {
+    .featured-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

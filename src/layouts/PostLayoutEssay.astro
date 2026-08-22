@@ -4,6 +4,8 @@ import PostMeta from '@components/post/PostMeta.astro';
 import TagList from '@components/post/TagList.astro';
 import PostNavigation from '@components/post/PostNavigation.astro';
 import RelatedPosts from '@components/post/RelatedPosts.astro';
+import PostQuickNav from '@components/post/PostQuickNav.astro';
+import Comments from '@components/site/Comments.astro';
 import { getAdjacentPosts, getRelatedPosts } from '@lib/posts';
 import type { CollectionEntry } from 'astro:content';
 import '@styles/prose.css';
@@ -21,7 +23,7 @@ const relatedPosts = await getRelatedPosts(post, 3);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <article class="essay-article">
+  <article id="article-start" class="essay-article">
     <div class="essay-container">
       <!-- 文章头部 -->
       <header class="essay-header">
@@ -60,13 +62,18 @@ const relatedPosts = await getRelatedPosts(post, 3);
         )}
       </footer>
 
+      <div id="article-end" class="article-end-anchor" aria-hidden="true"></div>
+
       <!-- 上下篇导航 -->
       <PostNavigation prev={prev} next={next} />
 
       <!-- 相关文章 -->
       <RelatedPosts posts={relatedPosts} />
+
+      <Comments title="参与讨论" />
     </div>
   </article>
+  <PostQuickNav />
 </BaseLayout>
 
 <style>
@@ -74,6 +81,10 @@ const relatedPosts = await getRelatedPosts(post, 3);
     padding-top: 8rem;
     padding-bottom: 6rem;
     background: var(--background);
+  }
+
+  .article-end-anchor {
+    scroll-margin-top: 7rem;
   }
 
   .essay-container {
