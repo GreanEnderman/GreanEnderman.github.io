@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "projects/new-article.md",
+                "file": "posts/tech/Primitive-Operation-Painter.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "new-article"
+              "title": "Primitive-Operation-Painter"
             }
           }
         ]
@@ -187,9 +187,10 @@
   },
   "active": "0e3526e056b225e7",
   "lastOpenFiles": [
+    "projects/new-article.md",
+    "posts/tech/Primitive-Operation-Painter.md",
     "posts/tech/resource-TensorRT-Model-Connect.md",
     "projects/blog-redesign.md",
-    "projects/new-article.md",
     "posts/essays/new-article.md",
     "posts/tech/从 TensorRT Model Connect 学习 Agentic Workflow：一个工程化 Agent 项目的构建方法.md",
     "2026-08-19.md",
